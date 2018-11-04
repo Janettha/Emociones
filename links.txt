@@ -1,0 +1,8 @@
+Extras:
+https://htmlcolorcodes.com/es/
+
+Android:
+https://stackoverflow.com/questions/25804673/how-to-implement-swipe-function-in-one-of-the-fragment-tab-not-tabswipe
+https://stackoverflow.com/questions/2173936/how-to-set-background-color-of-a-view
+https://stackoverflow.com/questions/47113948/java-lang-nosuchmethoderror-no-static-method-getfontlandroid-content-contexti
+https://stackoverflow.com/questions/46945602/error-get-font-landroid-content-contextilandroid-util-typedvalue

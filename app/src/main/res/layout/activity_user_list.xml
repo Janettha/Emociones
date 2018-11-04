@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryBackg2"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:id="@+id/rootview"
+    tools:context=".EmocionesVo.ListaUsuariosVo">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/action_bar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@+id/action_bar"
+            tools:listitem="@layout/cardview_usuario"
+            />
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/agregar_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:layout_anchorGravity="bottom|right|end" />
+
+</RelativeLayout>

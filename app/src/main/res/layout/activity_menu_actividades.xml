@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryBackg"
+    tools:context="janettha.activity1.EmocionesVo.MenuActividadesVo">
+    <!--android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_heigh="wrap_content"
+        android:layout_height="wrap_content" /-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.33"
+        android:orientation="vertical"
+        >
+        <!--Button
+            android:id="@+id/usuarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            /-->
+        <Button
+            android:id="@+id/menu_act1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/Act0"
+            android:text="Actividad 1"
+            android:gravity="center"
+            android:textSize="@dimen/textMenu"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/menu_act2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/Act1"
+            android:text="Actividad 2"
+            android:gravity="center"
+            android:textSize="@dimen/textMenu"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/menu_act3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:background="@color/Act2"
+            android:text="Actividad 3"
+            android:gravity="center"
+            android:textSize="@dimen/textMenu"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+</LinearLayout>

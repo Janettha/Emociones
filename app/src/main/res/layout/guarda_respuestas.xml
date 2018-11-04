@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorPrimaryBackg"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Click SI para enviar reporte de avances."
+        android:elegantTextHeight="true"
+        android:textAlignment="center"
+        android:textColor="@color/colorTxt"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/correo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTxt">
+        <EditText
+            android:id="@+id/confirmCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:hint="correo@correo.com"
+            android:text="Confirme correo"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorTxt"
+            android:textColorHint="@color/colorPrimaryTxt"
+            android:focusable="false"
+            android:clickable="true"
+            android:maxLines="1"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_margin"
+        android:layout_below="@+id/preguntaGuardar"
+        android:background="@color/colorPrimaryBackg"
+        >
+        <Button
+            android:id="@+id/GuardarSI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/colorPrimary"
+            android:text="SI"
+            />
+        <Button
+            android:id="@+id/GuardarNO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/activity_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@color/colorPrimary"
+            android:text="NO"
+            />
+    </LinearLayout>
+
+</LinearLayout>

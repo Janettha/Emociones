@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="janettha.activity1">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:supportsRtl">
+        <activity android:name=".EmocionesVo.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".EmocionesVo.LoginVo" />
+        <activity android:name=".EmocionesVo.ReiniciarPasswordVo" />
+        <activity android:name=".EmocionesVo.RegistrarseVo" />
+        <activity
+            android:name=".EmocionesVo.MenuActividadesVo"
+            android:label="Menu"
+            android:parentActivityName=".EmocionesVo.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".EmocionesVo.PreactividadVo"
+            android:label="@string/title_activity_preactivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EmocionesVo.MenuActividadesVo" />
+        </activity>
+        <activity
+            android:name=".Adaptadores.FragmentActivityRedacciones"
+            android:label="@string/title_activity_1"
+            android:parentActivityName=".EmocionesVo.MenuActividadesVo"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EmocionesVo.MenuActividadesVo" />
+        </activity>
+        <activity
+            android:name=".EmocionesVo.RuletaVo"
+            android:label="@string/title_activity_2"
+            android:parentActivityName=".EmocionesVo.MenuActividadesVo"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EmocionesVo.MenuActividadesVo" />
+
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EmocionesVo.LoginUsuarioVo"
+            android:label="@string/title_activity_loginUser"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Util.DBPrueba" />
+        <activity
+            android:name=".EmocionesVo.ImagenesVo"
+            android:label="@string/title_activity_act" />
+        <activity android:name=".EmocionesVo.PdfVo" />
+        <activity android:name=".EmocionesVo.ListaUsuariosVo" />
+        <activity android:name=".EmocionesVo.AgregaRedacciones" />
+        <activity android:name=".EmocionesVo.UsuariosVo" />
+        <activity android:name=".EmocionesVo.ConfiguracionCuenta"></activity>
+    </application>
+
+</manifest>

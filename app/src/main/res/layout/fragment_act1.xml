@@ -1,0 +1,141 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <TextView
+        android:id="@+id/Instruccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lee o escucha la pequeña situación y elije
+            ¿cómo se siente Lili?"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:textColor="@color/colorTxt"
+        android:background="@color/Act1Clear"
+        />
+        <LinearLayout
+            android:id="@+id/LRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".4"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+            <TextView
+                android:id="@+id/txtText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Redaccion sobre la actividad de Juanita y sus actividades recreativas acerca de Redaccion sobre la actividad de Juanita y sus actividades recreativas acerca de ...
+                    Redaccion sobre la actividad de Juanita y sus actividades recreativas acerca de Redaccion sobre la actividad de Juanita y sus actividades recreativas acerca de"
+                android:textColor="@color/colorTxt"
+                android:textSize="@dimen/activity_horizontal_margin"
+                android:textAlignment="center"
+                />
+            <Button
+                android:id="@+id/btnSpeak"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_action_play1"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LRes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_below="@+id/LRed"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/imgRedaccion"
+                    android:layout_width="@dimen/imgAct1"
+                    android:layout_height="@dimen/imgAct1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/ic_play" />
+
+                <TextView
+                    android:id="@+id/txRedaccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgRedaccion"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="RespuestaDto 1"
+                    android:textColor="@color/colorTxt" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/imgRedaccion2"
+                    android:layout_width="@dimen/imgAct1"
+                    android:layout_height="@dimen/imgAct1"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/ic_play" />
+
+                <TextView
+                    android:id="@+id/txRedaccion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgRedaccion2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="RespuestaDto 1"
+                    android:textColor="@color/colorTxt" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:orientation="vertical"
+                >
+                <ImageButton
+                    android:id="@+id/imgRedaccion3"
+                    android:layout_width="@dimen/imgAct1"
+                    android:layout_height="@dimen/imgAct1"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@mipmap/ic_play" />
+
+                <TextView
+                    android:id="@+id/txRedaccion3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgRedaccion3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="RespuestaDto 1"
+                    android:textColor="@color/colorTxt" />
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

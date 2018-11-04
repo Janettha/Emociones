@@ -1,0 +1,64 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Elige el nombre correcto de la emoción que se muestra en la siguiente imagen."
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/activity_horizontal_margin"
+        android:textColor="@color/colorTxt"
+        android:background="@color/Act0Clear"
+        />
+    <ImageView
+        android:id="@+id/imgFeel"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/section_label"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:background="@mipmap/ic_play"
+        />
+    <LinearLayout
+        android:id="@+id/respuestas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/imgFeel"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_margin"
+        >
+        <Button
+            android:id="@+id/ans1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Answer 1"
+            android:layout_margin="@dimen/activity_vertical_margin"/>
+        <Button
+            android:id="@+id/ans2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Answer 2"
+            android:layout_margin="@dimen/activity_vertical_margin"/>
+        <Button
+            android:id="@+id/ans3"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Answer 3"
+            android:layout_margin="@dimen/activity_vertical_margin"/>
+
+    </LinearLayout>
+
+</LinearLayout>

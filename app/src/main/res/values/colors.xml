@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--color name="colorPrimary">#00bfbf</color-->
+    <color name="colorTransparentWhite">#cccccc</color>
+    <color name="colorPrimary">#e8c840</color>
+    <color name="colorPrimaryDark">#d89008</color>
+    <color name="colorPrimaryBackg">#f8f8d8</color>
+    <color name="colorPrimaryBackg2">#997a60</color>
+    <color name="colorPrimaryTxt">#e8d070</color>
+    <color name="colorAccent">#b0b040</color>
+    <color name="colorBoy">#90c0c0</color>
+    <color name="colorGirl">#f0b8b8</color>
+    <color name="colorTxt">#9b6431</color>
+    <color name="txtDialogs">#f4b61a</color>
+    <color name="BackgDialogs">#fffdd2</color>
+    <color name="Act0">#5cbfde</color>
+    <color name="Act0Clear">#abd6df</color>
+    <color name="Act1">#ffe15d</color>
+    <color name="Act1Clear">#b5fff4a0</color>
+    <color name="Act2">#d491fd38</color>
+    <color name="Act2Clear">#d4bbff84</color>
+    <color name="Correcto">#fc2ab633</color>
+    <color name="Incorrecto">#f4594e</color>
+
+
+    <!-- LOGIN
+    <color name="bg_login">#26ae90</color>
+    <color name="bg_register">#2e3237</color>
+    <color name="bg_main">#428bca</color>
+    <color name="white">#ffffff</color>
+    <color name="input_login">#222222</color>
+    <color name="input_login_hint">#999999</color>
+    <color name="input_register">#888888</color>
+    <color name="input_register_bg">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login">#26ae90</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+    <color name="btn_logut_bg">#ff6861</color>
+    -->
+
+    <color name="bg_login">#ffef42</color>
+    <color name="bg_register">#ff8f39</color>
+    <color name="bg_main">#ffc004</color>
+    <color name="white">#ffffff</color>
+    <color name="input_login">#222222</color>
+    <color name="input_login_hint">#999999</color>
+    <color name="input_register">#888888</color>
+    <color name="input_register_bg">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login">#fff583</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+    <color name="btn_logut_bg">#ff8d36</color>
+
+</resources>

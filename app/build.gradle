@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenLocal()
+    flatDir {
+        dirs 'libs'
+    }
+    //maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
+    maven { url 'https://maven.google.com' }
+    google()
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        resConfigs "auto"
+        applicationId "janettha.activity1"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation 'com.android.support:appcompat-v7:26.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.google.firebase:firebase-storage:11.4.2'
+    implementation 'com.google.firebase:firebase-auth:11.4.2'
+
+    implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation 'com.google.android.gms:play-services:11.4.2'
+    //implementation 'com.google.firebase:firebase-core:11.4.2'
+    implementation 'com.google.firebase:firebase-database:11.4.2'
+    implementation 'com.android.support:support-v4:27.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation 'com.firebaseui:firebase-ui-auth:3.1.0'
+    implementation 'com.firebaseui:firebase-ui-storage:3.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:3.1.0'
+
+    //muestra imágenes
+    //compile 'com.github.bumptech.glide:glide:4.3.1'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    //compile 'com.android.support:design:26.0.2'
+
+    implementation 'com.android.support:design:27.0.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //Ruleta
+    implementation 'github.hellocsl:CursorWheelLayout:1.1.0'
+
+    //PDF
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
+}
+
+// ADD THIS AT THE BOTTOM
+apply plugin: 'com.google.gms.google-services'

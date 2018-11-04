@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryBackg"
+    tools:context="janettha.activity1.EmocionesVo.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+        <EditText
+            android:id="@+id/old_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:layout_above="@+id/password"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/useremail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/old_email"
+            android:layout_marginBottom="46dp"
+            android:gravity="center"
+            android:hint="@string/email_id"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorTxt"
+            android:layout_margin="@dimen/activity_margin"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:hint="@string/prompt_password"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:layout_above="@+id/newPassword"
+            android:layout_toEndOf="@+id/progressBar"
+            android:layout_toRightOf="@+id/progressBar"
+            tools:ignore="InvalidImeActionId" />
+
+        <EditText
+            android:id="@+id/newPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:hint="@string/new_pass"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:layout_above="@+id/changePass"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            tools:ignore="InvalidImeActionId" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            />
+        <LinearLayout
+            android:id="@+id/llbb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/newPassword"
+            >
+            <Button
+                android:id="@+id/changePass"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/btn_change"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/activity_margin"
+                />
+
+            <Button
+                android:id="@+id/remove"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/btn_remove"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/activity_margin"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llbb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/llbb1"
+            >
+            <Button
+                android:id="@+id/change_password_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/change_password"
+                android:textStyle="bold"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorTxt"
+                android:layout_margin="@dimen/activity_margin"/>
+
+            <Button
+                android:id="@+id/remove_user_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="@string/remove_user"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorTxt"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/activity_margin"/>
+            />
+
+            <Button
+                android:id="@+id/sign_out"
+                style="?android:textAppearanceSmall"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorTxt"
+                android:text="@string/btn_sign_out"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/activity_margin"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

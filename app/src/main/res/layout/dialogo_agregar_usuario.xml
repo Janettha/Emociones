@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    android:background="@color/colorPrimaryBackg"
+    >
+
+    <LinearLayout
+        android:id="@+id/imagenes_add"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="8dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:weightSum="2"
+        >
+        <ImageView
+            android:id="@+id/logoF_add"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/f0"
+            />
+        <ImageView
+            android:id="@+id/logoM_add"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/m0"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"
+        >
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Regístrse para poder iniciar las actividades."
+        android:textColor="@color/colorTxt"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:layout_margin="5dp"
+        />
+
+    <TextView
+        android:id="@+id/tutor_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin"
+        android:gravity="center"
+        android:hint="@string/email_id"
+        android:visibility="gone"
+        android:textStyle="bold|italic"
+        android:textColor="@color/colorTxt"/>
+
+    <EditText
+        android:id="@+id/nombre_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre (s)"
+        android:textSize="16dp"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorPrimaryTxt"
+        android:textColor="@color/colorTxt"
+        />
+
+    <EditText
+        android:id="@+id/apellidos_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellidos"
+        android:textSize="16dp"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorPrimaryTxt"
+        android:textColor="@color/colorTxt"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/usuario_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Usuario"
+            android:textSize="16dp"
+            android:drawablePadding="07dp"
+            android:drawableLeft="@drawable/ic_user"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorPrimaryTxt"
+            android:textColor="@color/colorTxt"
+            />
+        <EditText
+            android:id="@+id/password_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:hint="Password"
+            android:textSize="16dp"
+            android:drawablePadding="07dp"
+            android:drawableLeft="@drawable/ic_password"
+            android:inputType="textPassword"
+            android:textColorHint="@color/colorPrimaryTxt"
+            android:textColor="@color/colorTxt"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".75"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Fecha de Nacimiento:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.25"
+            android:weightSum="2"
+            android:orientation="vertical"
+            >
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorTxt">
+                <EditText
+                    android:id="@+id/fecha_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Dia / Mes / Año"
+                    android:textColor="@color/colorPrimaryTxt"
+                    android:textSize="16dp"
+                    android:drawablePadding="07dp"
+                    android:drawableLeft="@drawable/ic_date"
+                    android:inputType="date"
+                    android:gravity="center"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:maxLines="1"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edad_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="14 años"
+                android:textColor="@color/colorPrimaryTxt"
+                android:textSize="16dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center"
+            android:text="Sexo:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            />
+
+        <RadioGroup
+            android:id="@+id/radio_group_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:checkedButton="@+id/rdbOne">
+            <RadioButton
+                android:id="@+id/femenino_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Femenino"
+                android:drawablePadding="07dp"
+                android:drawableLeft="@drawable/ic_girl"
+                android:textColor="@color/colorPrimaryTxt"/>
+
+            <RadioButton
+                android:id="@+id/masculino_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="07dp"
+                android:drawableLeft="@drawable/ic_boy"
+                android:text="Masculino"
+                android:textColor="@color/colorPrimaryTxt" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"
+        >
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+        <Button
+            android:id="@+id/regresar_add"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/BackgDialogs"
+            android:text="Regresar"
+            android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/agregar_add"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:text="Agregar"
+            android:layout_alignParentBottom="true"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/login_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="¿Ya está registrado? Ingrese aquí"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        />
+</LinearLayout>

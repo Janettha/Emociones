@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/usuarios_rootview"
+    tools:context=".EmocionesVo.UsuariosVo">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/usuarios_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/BackgDialogs"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/usuarios_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/BackgDialogs"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/usuarios_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/cardview_usuario"
+        android:layout_below="@id/usuarios_action_bar"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/usuarios_button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/Act0"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_anchorGravity="bottom|right|end" />
+
+</RelativeLayout>

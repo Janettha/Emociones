@@ -6,7 +6,7 @@ import java.util.List;
 public class ActividadMasterDto {
     protected int id;
     protected String sexo;
-    protected List<EmocionDto> listEmociones = new ArrayList<EmocionDto>();
+    protected List<EmocionDto> listEmociones = new ArrayList<>();
 
     public ActividadMasterDto(){}
 
@@ -58,6 +58,12 @@ public class ActividadMasterDto {
 
     public void setEmocionC(EmocionDto e){
         this.listEmociones.add(2, e);
+    }
+
+    public String getString(){
+        return " ID: "+getId() +" | "+emocionMain().getName()+
+               " Sexo: "+getSexo()+
+               " Tam de lista de emociones: "+getListEmociones().size();
     }
 
 }

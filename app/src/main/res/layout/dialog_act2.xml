@@ -29,19 +29,11 @@
         android:layout_margin="@dimen/activity_margin"
         android:layout_gravity="center"/>
     <ImageView
+        android:id="@+id/imgEmocion"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:id="@+id/imgEmocion"
         android:layout_gravity="center"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/nameEmocion"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_margin"
-        >
+
         <Button
             android:id="@+id/btnRecord"
             android:layout_width="50dp"
@@ -49,6 +41,7 @@
             android:layout_margin="@dimen/activity_margin"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_action_name"
+            android:layout_below="@+id/nameEmocion"
         />
         <Button
             android:id="@+id/btnStop"
@@ -59,6 +52,7 @@
             android:visibility="gone"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_action_stop"
+            android:layout_below="@+id/nameEmocion"
             />
         <Button
             android:id="@+id/btnPlay"
@@ -68,7 +62,7 @@
             android:layout_margin="@dimen/activity_margin"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/ic_action_play1"
+            android:layout_below="@+id/nameEmocion"
             />
-    </LinearLayout>
 
 </LinearLayout>

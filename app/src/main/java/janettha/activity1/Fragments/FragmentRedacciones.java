@@ -3,6 +3,7 @@ package janettha.activity1.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
@@ -34,6 +35,7 @@ import janettha.activity1.EmocionesDto.ActividadRedaccionesDto;
 import janettha.activity1.EmocionesDto.EmocionDto;
 import janettha.activity1.EmocionesDao.EmocionesDao;
 import janettha.activity1.EmocionesDto.RespuestaDto;
+import janettha.activity1.EmocionesVo.MenuActividadesVo;
 import janettha.activity1.Util.Factory;
 import janettha.activity1.Util.TemplatePDF;
 import janettha.activity1.R;
@@ -42,6 +44,7 @@ import janettha.activity1.Util.MediaPlayerSounds;
 
 
 public class FragmentRedacciones extends Fragment {
+    private static final String TAG = "FragmentRedacciones";
 
     @SuppressLint("StaticFieldLeak")
     static Context context;
@@ -61,6 +64,8 @@ public class FragmentRedacciones extends Fragment {
     private int idEmocion3;
     TextToSpeech t1;
     private static MediaPlayerSounds mediaPlayerSounds;
+
+    ImageView backMenu;
 
     /*DIALOG*/
     Dialog dialog;
@@ -86,7 +91,7 @@ public class FragmentRedacciones extends Fragment {
         templatePDF = tPDF;
         context = c;
 
-        fInicio = Calendar.getInstance().getTime().toString();
+        fInicio = Factory.formatoFechaHora();
         mPageNumber = pageNumber;
         int a2 = actividadDto.emocionMain().getEmocion();
         idDBA2 = numA2DB;
@@ -139,13 +144,15 @@ public class FragmentRedacciones extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         db = Factory.getBaseDatos(getContext());
         int id[] = new int[3];
         int r;
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_act1, container, false);
+        final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_act1, container, false);
+
+        backMenu = rootView.findViewById(R.id.backMenu);
 
         /*REDACCION*/
         ((TextView) rootView.findViewById(R.id.txtText)).setText(textoRedaccion);
@@ -169,27 +176,27 @@ public class FragmentRedacciones extends Fragment {
         id[2] = emocionesDelegate.obtieneEmocion(idEmocion3, sexo, db).getEmocion();
 
         if(sexo.equals("f")){
-            indicaciones.setText("¿Cómo se siente Lili? Elige el nombre de la emoción que se muestra en la siguiente imagen. ");
+            indicaciones.setText("¿Cómo se siente Lili?");
         }else{
-            indicaciones.setText("¿Cómo se siente Juan Carlos? Elige el nombre de la emoción que se muestra en la siguiente imagen. ");
+            indicaciones.setText("¿Cómo se siente Juan Carlos?");
         }
 
-        bgAct1.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
-        txRedaccion.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
+        //bgAct1.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
+        //txRedaccion.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
 
         r = (int) (Math.random() * 3 ) ;
         switch (r){
             case 0:
-                rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
-                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo,id[0], id[0], id[1], id[2], exEmocion1, exEmocion2, exEmocion3);
+                //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
+                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo,id[0], id[0], id[1], id[2], id[1], exEmocion1, exEmocion2, exEmocion3);
                 break;
             case 1:
-                rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
-                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo, id[0], id[2], id[0], id[1], exEmocion3, exEmocion1, exEmocion2);
+                //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
+                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo, id[0], id[2], id[0], id[1], id[1], exEmocion3, exEmocion1, exEmocion2);
                 break;
             case 2:
-                rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
-                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo, id[0], id[1], id[2], id[0], exEmocion2, exEmocion3, exEmocion1);
+                //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(id[0], sexo, db).getColor()));
+                interfaceFrame(rootView, btnE1, txR1, btnE2, txR2, btnE3, txR3, sexo, id[0], id[1], id[2], id[0], id[1], exEmocion2, exEmocion3, exEmocion1);
                 break;
         }
 
@@ -211,6 +218,17 @@ public class FragmentRedacciones extends Fragment {
             }
         });
         db.close();
+
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: "+getActivity().toString());
+                Intent intent = new Intent(getContext(), MenuActividadesVo.class);
+                startActivityForResult(intent, 0);
+                getActivity().finish();
+            }
+        });
+
         return rootView;
     }
 
@@ -235,11 +253,16 @@ public class FragmentRedacciones extends Fragment {
         return mPageNumber;
     }
 
-    private void interfaceFrame(View v, ImageButton imgFeel, TextView txFeel1, ImageButton imgFeel2, TextView txFeel2, ImageButton imgFeel3, TextView txFeel3, String s, int r, int r1, int r2, int r3, String e1, String e2, String e3){
+    private void interfaceFrame(View v,
+                                ImageButton imgFeel, TextView txFeel1,
+                                ImageButton imgFeel2, TextView txFeel2,
+                                ImageButton imgFeel3, TextView txFeel3,
+                                String s, int r, int r1, int r2, int r3, int rOpcional,
+                                String e1, String e2, String e3){
         db = Factory.getBaseDatos(getContext());
         Uri ruta;
         final String ex[] = new String [3];
-        final int ran[] = new int[4];
+        final int ran[] = new int[5];
 
         ex[0] = e1;
         ex[1] = e2;
@@ -249,11 +272,15 @@ public class FragmentRedacciones extends Fragment {
         ran[1] = r1;
         ran[2] = r2;
         ran[3] = r3;
+        ran[4] = rOpcional;
 
         /*Nombre de botones*/
         txFeel1.setText(emocionesDelegate.obtieneEmocion(r1, sexo, db).getName());
+        txFeel1.setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
         txFeel2.setText(emocionesDelegate.obtieneEmocion(r2, sexo, db).getName());
+        txFeel2.setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
         txFeel3.setText(emocionesDelegate.obtieneEmocion(r3, sexo, db).getName());
+        txFeel3.setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
 
         /*Pictures de botones*/
         ruta = Uri.parse(emocionesDelegate.obtieneEmocion(r1, sexo, db).getUrl());
@@ -281,16 +308,25 @@ public class FragmentRedacciones extends Fragment {
                         e.printStackTrace();
                     }
                     db = Factory.getBaseDatos(getContext());
-                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[1], sexo, db), "CORRECTO");
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[1], sexo, db), "¡Correcto!");
                     db.close();
-                }else {
+                } else if(ran[4] == ran[1]){
+                    try {
+                        mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(true));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    db = Factory.getBaseDatos(getContext());
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[1], sexo, db), "Casi lo logras...\n"+ex[0]);
+                    db.close();
+                } else {
                     try {
                         mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(false));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     db = Factory.getBaseDatos(getContext());
-                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[1], sexo, db), ex[0]);
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[1], sexo, db), "Oh ohhh...\n"+ex[0]);
                     db.close();
                 }
             }
@@ -307,14 +343,23 @@ public class FragmentRedacciones extends Fragment {
                     db = Factory.getBaseDatos(getContext());
                     MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[2], sexo, db), "CORRECTO");
                     db.close();
-                }else{
+                } else if(ran[4] == ran[2]){
+                    try {
+                        mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(true));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    db = Factory.getBaseDatos(getContext());
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[2], sexo, db), "Casi lo logras...\n"+ex[1]);
+                    db.close();
+                } else{
                     try {
                         mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(false));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     db = Factory.getBaseDatos(getContext());
-                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[2], sexo, db),ex[1]);
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[2], sexo, db),"Oh ohhh...\n"+ex[1]);
                     db.close();
                 }
             }
@@ -332,7 +377,16 @@ public class FragmentRedacciones extends Fragment {
                     db = Factory.getBaseDatos(getContext());
                     MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[3], sexo, db), "CORRECTO");
                     db.close();
-                }else {
+                }else if(ran[4] == ran[3]){
+                    try {
+                        mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(true));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    db = Factory.getBaseDatos(getContext());
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[3], sexo, db), "Casi lo logras...\n"+ex[2]);
+                    db.close();
+                } else {
                     try {
                         mediaPlayerSounds.playSound(mediaPlayerSounds.loadSoundTF(false));
                     } catch (InterruptedException e) {
@@ -340,7 +394,7 @@ public class FragmentRedacciones extends Fragment {
                     }
 
                     db = Factory.getBaseDatos(getContext());
-                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[3], sexo, db), ex[2]);
+                    MyCustomAlertDialog(v, ran[0], emocionesDelegate.obtieneEmocion(ran[3], sexo, db), "Oh ohhh...\n"+ex[2]);
                     db.close();
                 }
             }
@@ -383,7 +437,7 @@ public class FragmentRedacciones extends Fragment {
             explicacionDialogo.setText(" ¡LO LOGRASTE! ");
         }
 
-        fFin = Calendar.getInstance().getTime().toString();
+        fFin = Factory.formatoFechaHora();
         db = Factory.getBaseDatos(getContext());
         respuestaDtoPDF = new RespuestaDto(em.getEmocion(), fInicio, fFin, emocionesDelegate.obtieneEmocion(mainE, sexo, db).getEmocion(), respuesta);
         db.close();
@@ -407,6 +461,7 @@ public class FragmentRedacciones extends Fragment {
                     Log.e("DB/A2", "UserDB: " + mDatabaseUser.child(user).child("indiceA2").toString());
                     if (idDBA2 < 17) {
                         int indice = idDBA2 + 3;
+                        modificaIndices(indice);
                         mDatabaseUser.child(user).child("indiceA2").setValue(indice);
                         Log.e("DB/A2", "User: " + user + " indiceA2: " + String.valueOf(indice));
                     }else{
@@ -431,10 +486,17 @@ public class FragmentRedacciones extends Fragment {
         dialog.show();
 
     }
+
+    private void modificaIndices(int indice) {
+        SQLiteDatabase db = Factory.getBaseDatos(context);
+        emocionesDelegate.modificaRespuestasActividadDos(db, user, indice);
+        db.close();
+    }
+
     private void pdfConfig(){
         templatePDF.openPDF();
         templatePDF.addMetaData(user);
-        templatePDF.addHeader(user, fInicio, fFin, Calendar.getInstance().getTime().toString());
+        templatePDF.addHeader(user, fInicio, fFin, Factory.formatoFechaHora());
         templatePDF.addParrafo(2);
         templatePDF.createTable(templatePDF.getRespuestasActB());
         templatePDF.closeDocument();

@@ -22,6 +22,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import janettha.activity1.EmocionesDao.EmocionesDao;
 import janettha.activity1.EmocionesDelegate.EmocionesDelegate;
@@ -41,7 +44,7 @@ public class TemplatePDF {
     private Font fText = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD);
     private Font fHighText = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD, BaseColor.YELLOW);
 
-    private String headers[] = {"Ejercicio", "INICIO", "FIN", "RespuestaDto", "Calificacion"};
+    private String headers[] = {"Ejercicio", "Tiempo en responder", "Respuesta", "Calificación"};
     EmocionesDelegate emocionesDelegate;
 
     String tutor, email;
@@ -88,13 +91,13 @@ public class TemplatePDF {
     public void addHeader(String user, String iniS, String finS, String date){
         getDatosTutor();
         paragraph = new Paragraph();
-        addChilCenter(new Paragraph("USER: "+user, fTitle));
-        addChilCenter(new Paragraph("Fecha de creacion de archivo PDF: "+date, fText));
+        addChilCenter(new Paragraph("USUARIO: "+user, fTitle));
+        addChilCenter(new Paragraph("Fecha: "+date, fText));
         paragraph.setSpacingAfter(20);
         addChilP(new Paragraph("Tutor: "+ tutor, fText));
         addChilP(new Paragraph("Correo de tutor: "+email, fText));
-        addChilP(new Paragraph("Inicio de sesion: "+iniS));
-        addChilP(new Paragraph("Fin de sesion: "+finS));
+        //addChilP(new Paragraph("Inicio de sesion: "+iniS));
+        //addChilP(new Paragraph("Fin de sesion: "+finS));
         paragraph.setSpacingAfter(30);
         try {
             document.add(paragraph);
@@ -135,22 +138,32 @@ public class TemplatePDF {
         while (indexC < headers.length){
             pdfPCell = new PdfPCell(new Phrase(headers[indexC++], fSubTitle));
             pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            pdfPCell.setBackgroundColor(BaseColor.ORANGE);
+            pdfPCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
             pdfPTable.addCell(pdfPCell);
         }
 
+        int indexFin;
         for(int indexR = 0; indexR < RespuestaDto.size(); indexR++){
+            indexFin = indexR>0? indexR-1: 0;
             String[]row = new String[headers.length];
             SQLiteDatabase db = Factory.getBaseDatos(context);
                 row[0] = emocionesDelegate.obtieneEmocion(RespuestaDto.get(indexR).getId(), sexo, db).getName();
-                row[1] = RespuestaDto.get(indexR).getInicioS();
-                row[2] = RespuestaDto.get(indexR).getFinS();
-                row[3] = emocionesDelegate.obtieneEmocion(RespuestaDto.get(indexR).getRespuesta(), sexo, db).getName();
+                //row[1] = RespuestaDto.get(indexR).getFinS() - RespuestaDto.get(indexR).getInicioS();
+                Date inicio;
+                if(indexR == 0){
+                    inicio = Factory.formatoFechaHoraToDate(RespuestaDto.get(indexR).getInicioS());
+                }else {
+                    inicio = Factory.formatoFechaHoraToDate(RespuestaDto.get(indexFin).getFinS());
+                }
+                Date fin = Factory.formatoFechaHoraToDate(RespuestaDto.get(indexR).getFinS());
+                Log.d(TAG, "createTable: indexFin: "+indexFin+"|"+indexR+" inicio: "+inicio+" fin: "+fin);
+                row[1] = getDiferenciaTiempo(inicio, fin)+" segundos";
+                row[2] = emocionesDelegate.obtieneEmocion(RespuestaDto.get(indexR).getRespuesta(), sexo, db).getName();
             db.close();
             if(RespuestaDto.get(indexR).getCalif()) {
-                row[4] = "Correcto";
+                row[3] = "Correcto";
             }else{
-                row[4] = "Incorrecto";
+                row[3] = "Incorrecto";
             }
             for (indexC = 0; indexC < headers.length ; indexC++) {
                 pdfPCell = new PdfPCell(new Phrase(row[indexC]));
@@ -165,6 +178,18 @@ public class TemplatePDF {
         } catch (DocumentException e) {
             Log.e("createTable", e.toString());
         }
+    }
+
+    private String getDiferenciaTiempo(Date inicio, Date fin) {
+
+        long duration  = fin.getTime() - inicio.getTime();
+
+        long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
+
+        return String.valueOf(diffInSeconds);
     }
 
     public void viewPDF(){

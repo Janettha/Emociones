@@ -3,11 +3,14 @@ package janettha.activity1.Fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +23,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import janettha.activity1.EmocionesDelegate.EmocionesDelegate;
 import janettha.activity1.EmocionesDto.ActividadImagenesDto;
 import janettha.activity1.EmocionesDto.EmocionDto;
 import janettha.activity1.EmocionesDao.EmocionesDao;
 import janettha.activity1.EmocionesVo.ListaUsuariosVo;
+import janettha.activity1.EmocionesVo.MenuActividadesVo;
 import janettha.activity1.EmocionesVo.PreactividadVo;
 import janettha.activity1.R;
 import janettha.activity1.Util.Factory;
@@ -35,6 +40,7 @@ import janettha.activity1.Util.SoundManager;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentImagenes extends Fragment {
+    private static final String TAG = "FragmentImagenes";
 
     private static final String ARG_PAGE = "section_number";
     private int mPageNumber;
@@ -96,7 +102,7 @@ public class FragmentImagenes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         /*VIEW*/
-        ImageView imgFeel;
+        ImageView imgFeel, backMenu;
         Button btnA1, btnA2, btnA3, btNext;
 
         Uri ruta;
@@ -106,6 +112,7 @@ public class FragmentImagenes extends Fragment {
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_preactivity, container, false);
 
+        backMenu = rootView.findViewById(R.id.backMenu);
         imgFeel = (ImageView) rootView.findViewById(R.id.imgFeel);
         btnA1 = (Button) rootView.findViewById(R.id.ans1);
         btnA2 = (Button) rootView.findViewById(R.id.ans2);
@@ -130,6 +137,17 @@ public class FragmentImagenes extends Fragment {
         }
 
         db.close();
+
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: "+getActivity().toString());
+                Intent intent = new Intent(getContext(), MenuActividadesVo.class);
+                startActivityForResult(intent, 0);
+                getActivity().getSupportFragmentManager().getFragments().clear();
+                getActivity().finish();
+            }
+        });
 
         return rootView;
     }

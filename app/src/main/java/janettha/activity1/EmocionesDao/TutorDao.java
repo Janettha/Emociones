@@ -2,6 +2,7 @@ package janettha.activity1.EmocionesDao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -22,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import janettha.activity1.EmocionesDto.TutoresDto;
+import janettha.activity1.EmocionesVo.ListaUsuariosVo;
+import janettha.activity1.EmocionesVo.LoginVo;
 import janettha.activity1.Util.Factory;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -45,22 +48,18 @@ public class TutorDao {
     public boolean insertaTutor(TutoresDto dto, SQLiteDatabase db){
         boolean ok = true;
         ContentValues rows = new ContentValues();
-        try {
-            rows.put("tutor", dto.getTutor());
-            rows.put("nombre", dto.getName());
-            rows.put("apellidos", dto.getSurnames());
-            rows.put("correo", dto.getEmail());
-            rows.put("password", dto.getPass());
-            rows.put("registro", dto.getRegistro());
-            ok = db.insert("tutor", null, rows)>0 && ok;
-            Log.d(TAG, "insertaTutor: INSERT-ok: "+ok);
-            if(!ok){
-                // ok = db.update("emocion", rows, "emocion = ? AND sexo = '?'", new String[]{e.getId()+"", e.getSexo()})>0 && ok;
-                ok = updateTutor(dto, db);
-                Log.d(TAG, "insertaTutor: UPDATE-ok: "+ok);
-            }
-        }catch(SQLException e){
-            Log.d(TAG, "addEmociones: ERROR: "+e.getMessage());
+        rows.put("tutor", dto.getTutor());
+        rows.put("nombre", dto.getName());
+        rows.put("apellidos", dto.getSurnames());
+        rows.put("correo", dto.getEmail());
+        rows.put("password", dto.getPass());
+        rows.put("registro", dto.getRegistro());
+        ok = db.insert("tutor", null, rows)>0 && ok;
+        Log.d(TAG, "insertaTutor: INSERT-ok: "+ok);
+        if(!ok){
+            // ok = db.update("emocion", rows, "emocion = ? AND sexo = '?'", new String[]{e.getId()+"", e.getSexo()})>0 && ok;
+            ok = updateTutor(dto, db);
+            Log.d(TAG, "insertaTutor: UPDATE-ok: "+ok);
         }
         return ok;
     }
@@ -122,6 +121,7 @@ public class TutorDao {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {}
+                Boolean encontrado = false;
                 GenericTypeIndicator<HashMap<String, TutoresDto>> objectsGTypeInd = new GenericTypeIndicator<HashMap<String, TutoresDto>>() {
                 };
                 Map<String, TutoresDto> objectHashMap = dataSnapshot.getValue(objectsGTypeInd);
@@ -130,6 +130,7 @@ public class TutorDao {
                     TutoresDto tutor = objectArrayList.get(i);
                     if (tutor.getEmail().equals(correoTutor)) { // add newTutor != null
                         Log.d(TAG, "onDataChange: TUTOR: "+tutor.getString());
+                        encontrado = true;
                         TutoresDto dto = new TutoresDto();
                         dto.setTutor(tutor.getTutor());
                         dto.setRegistro(tutor.getRegistro());
@@ -144,11 +145,20 @@ public class TutorDao {
                             editorSP.putString("tutor", tutor.getTutor());
                             editorSP.commit();
                             Log.d(TAG, "onDataChange: Tutor insertado: "+tutor.getString());
+
+                            Intent intent = new Intent(context, ListaUsuariosVo.class);
+                            intent.putExtra("tutor", tutor.getTutor());
+                            context.startActivity(intent);
+                        }else{
+                            Toast.makeText(context, "Algo salió mal, inténtelo de nuevo", Toast.LENGTH_SHORT).show();
                         }
                         Log.d(TAG, "onDataChange: Tutor: "+dto.getString());
                         db.close();
                         break;
                     }
+                }
+                if(!encontrado) {
+                    Toast.makeText(context, "Usuario no encontrado, regístrese", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -162,10 +172,14 @@ public class TutorDao {
 
     }
 
-    public boolean cerrarSesion(SQLiteDatabase db) {
+    public boolean cerrarSesion(int listSize, SQLiteDatabase db) {
         boolean ok = true;
+        if(listSize>0) {
+            ok = db.delete("usuario", null, null) > 0 && ok;
+            Log.d(TAG, "cerrarSesion: USER: " + ok);
+        }
         ok = db.delete("tutor", null, null) >0 && ok;
-        ok = db.delete("usuario", null, null) >0 && ok;
+        Log.d(TAG, "cerrarSesion: TUTOR: "+ok);
         return ok;
     }
 }

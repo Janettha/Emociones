@@ -44,7 +44,7 @@ public class FragmentActivityRedacciones extends FragmentActivity {
 
     private static final int NUM_PAGES = 3;
     private LockableViewPager mPager;
-    public final int LIM_emociones = 11;
+    public final int LIM_emociones = 16;
 
     public static final String ARG_r = "Redaccion";
     public static final String ARG_u = "User";
@@ -103,7 +103,7 @@ public class FragmentActivityRedacciones extends FragmentActivity {
         if(b != null){
             A2 = b.getInt("a2",0);
         }
-        if(A2>LIM_emociones){
+        if(A2>=LIM_emociones){
             randomID();
             Log.d(TAG, "onCreate: RANDOM: "+r[0]+" : "+r[1]+" : "+r[2]);
         }else{
@@ -201,21 +201,29 @@ public class FragmentActivityRedacciones extends FragmentActivity {
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226;"));
             mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.white));
+            //mDots[i].setTextColor(getResources().getColor(R.color.white));
             mDotLayout.addView(mDots[i]);
         }
         if (mDots.length > 0){
             if(position == 0) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[0]).emocionMain().getEmocion(), sexo, db).getColor()));
-                mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[0]).emocionMain().getEmocion(), sexo, db).getColorB()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[0]).emocionMain().getEmocion(), sexo, db).getColor()));
+                ActividadRedaccionesDto dto = listActB.get(r[0]);
+                Log.d(TAG, "addDotsIndicator: dto: "+dto.emocionMain()+" - "+dto.emocionB()+" - "+dto.emocionC());
+                mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(dto.emocionMain().getEmocion(), sexo, db).getColorB()));
+                mDots[1].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(dto.emocionMain().getEmocion(), sexo, db).getColor()));
+                mDots[2].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(dto.emocionMain().getEmocion(), sexo, db).getColor()));
                 Log.e("ActRedaccionesDto-Dots",listActB.get(r[0]).emocionMain().getName());
             }else if(position == 1){
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[1]).emocionMain().getEmocion(), sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[1]).emocionMain().getEmocion(), sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[1]).emocionMain().getEmocion(), sexo, db).getColorB()));
+                mDots[0].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[1]).emocionMain().getEmocion(), sexo, db).getColor()));
+                mDots[2].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[1]).emocionMain().getEmocion(), sexo, db).getColor()));
                 Log.e("ActRedaccionesDto-Dots",listActB.get(r[1]).emocionMain().getName());
             }else if(position == 2) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[2]).emocionMain().getEmocion(), sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[2]).emocionMain().getEmocion(), sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[2]).emocionMain().getEmocion(), sexo, db).getColorB()));
+                mDots[1].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[2]).emocionMain().getEmocion(), sexo, db).getColor()));
+                mDots[0].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(listActB.get(r[2]).emocionMain().getEmocion(), sexo, db).getColor()));
                 Log.e("ActRedaccionesDto-Dots",listActB.get(r[2]).emocionMain().getName());
             }
             Log.e("ActRedaccionesDto-Dots",listActB.get(r[0]).emocionMain().getName()+"-"+listActB.get(r[1]).emocionMain().getName()+"-"+listActB.get(r[2]).emocionMain().getName());

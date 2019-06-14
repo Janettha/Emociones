@@ -66,7 +66,7 @@ public class SesionDelegate {
         return dao.insertaTutor(dto, db);
     }
 
-    public boolean cerrarSesion(SQLiteDatabase db) {
-        return dao.cerrarSesion(db);
+    public boolean cerrarSesion(int listSize, SQLiteDatabase db) {
+        return dao.cerrarSesion(listSize, db);
     }
 }

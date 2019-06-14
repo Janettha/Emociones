@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -53,6 +54,7 @@ import janettha.activity1.Util.MediaPlayerSounds;
 public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnMenuSelectedListener {
     private static final String TAG = "RuletaVo";
 
+    ImageView backMenu;
     CursorWheelLayout wheel_img;
     TextView textWheel;
     EmocionesDelegate emocionesDelegate;
@@ -97,6 +99,7 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity2);
 
+        backMenu = findViewById(R.id.backMenu);
         mAuth = FirebaseAuth.getInstance();
 
         sharedPreferences = getSharedPreferences(keySP, MODE_PRIVATE);
@@ -133,6 +136,14 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(new Intent(RuletaVo.this, MenuActividadesVo.class),0);
+                finish();
             }
         });
     }
@@ -215,7 +226,12 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
         EmocionDialog = (ImageView) dialog.findViewById(R.id.imgEmocion);
         NameEmocionDialog = (TextView) dialog.findViewById(R.id.nameEmocion);
 
-        Uri ruta = Uri.parse(emocionesDelegate.obtieneEmocion(pos, sexo, db).getUrl());
+        Uri ruta;
+        if (Build.VERSION.SDK_INT < 24) {
+            ruta = Uri.fromFile(new File(emocionesDelegate.obtieneEmocion(pos, sexo, db).getUrl()));
+        } else {
+            ruta = Uri.parse(emocionesDelegate.obtieneEmocion(pos, sexo, db).getUrl());
+        }
         Picasso.with(v.getContext())
                 .load(ruta).fit()
                 .into(EmocionDialog);
@@ -237,7 +253,11 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
                     buttonRecord.setEnabled(false);
                     buttonStop.setEnabled(true);
                     //buttonRecord.setEnabled(false);
-                    startRecording();
+                    try {
+                        startRecording();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     buttonRecord.setVisibility(View.INVISIBLE);
                     buttonStop.setVisibility(View.VISIBLE);
                     buttonStop.setEnabled(true);
@@ -281,7 +301,12 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
     public void mostrarFile(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         String path = mFileName;
-        Uri uri = Uri.parse(path);
+        Uri uri;
+        if (Build.VERSION.SDK_INT < 24) {
+            uri = Uri.fromFile(new File(path));
+        } else {
+            uri = Uri.parse(path); // My work-around for new SDKs, causes ActivityNotFoundException in API 10.
+        }
         //Uri uri = Uri.parse(mFileS+userName);
         Toast.makeText(this, path+"\n"+uri.toString(), Toast.LENGTH_SHORT).show();
         intent.setDataAndType(uri,"audio/mp3");
@@ -316,20 +341,14 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
         }
     }
 
-    private void startRecording() {
+    private void startRecording() throws IOException {
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         //mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
         mRecorder.setOutputFile(mFileName);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try {
-            mRecorder.prepare();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
-        }
-
+        mRecorder.prepare();
         mRecorder.start();
     }
 
@@ -347,7 +366,12 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
         String path = emocionesDelegate.obtieneEmocion(wheel_img.getSelectedPosition(), sexo, db).getEmocion() + "_" + emocionesDelegate.obtieneEmocion(wheel_img.getSelectedPosition(), sexo, db).getName() + extension;
         db.close();
         StorageReference filepath = mStorage.child("Audio").child(path);
-        Uri uri = Uri.fromFile(new File(mFileName));
+        Uri uri;
+        if (Build.VERSION.SDK_INT < 24) {
+            uri = Uri.fromFile(new File(mFileName));
+        } else {
+            uri = Uri.parse(mFileName); // My work-around for new SDKs, causes ActivityNotFoundException in API 10.
+        }
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -358,7 +382,11 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
 
     private void onRecord(boolean start) {
         if (start) {
-            startRecording();
+            try {
+                startRecording();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             stopRecording();
         }
@@ -392,6 +420,12 @@ public class RuletaVo extends AppCompatActivity implements CursorWheelLayout.OnM
         int record_audio_result = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
         return (write_external_storage_result == PackageManager.PERMISSION_GRANTED &&
                 record_audio_result == PackageManager.PERMISSION_GRANTED);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivityForResult(new Intent(RuletaVo.this, MenuActividadesVo.class),0);
+        this.finish();
     }
 
 }

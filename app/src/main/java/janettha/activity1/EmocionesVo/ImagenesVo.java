@@ -122,19 +122,25 @@ public class ImagenesVo extends Activity {
             mDots[i] = new TextView(this);
             mDots[i].setText(Html.fromHtml("&#8226;"));
             mDots[i].setTextSize(35);
-            mDots[i].setTextColor(getResources().getColor(R.color.white));
+            //mDots[i].setTextColor(getResources().getColor(R.color.white));
             mDotLayout.addView(mDots[i]);
         }
         if (mDots.length > 0){
             if(position == 0) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[0], sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[0], sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[0], sexo, db).getColorB()));
+                mDots[1].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[0], sexo, db).getColor()));
+                mDots[2].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[0], sexo, db).getColor()));
             }else if(position == 1){
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColorB()));
+                mDots[0].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
+                mDots[2].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
             }else if(position == 2) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[2], sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[2], sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[2], sexo, db).getColorB()));
+                mDots[0].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[2], sexo, db).getColor()));
+                mDots[1].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r[2], sexo, db).getColor()));
             }
         }
         db.close();
@@ -194,6 +200,7 @@ public class ImagenesVo extends Activity {
     @Override
     public void onBackPressed() {
         startActivity(new Intent(ImagenesVo.this, MenuActividadesVo.class));
+        finish();
     }
 
 }

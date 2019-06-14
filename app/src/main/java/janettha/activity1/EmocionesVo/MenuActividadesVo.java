@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,13 +33,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import janettha.activity1.EmocionesDelegate.ActividadesDelegate;
 import janettha.activity1.EmocionesDelegate.UsuariosDelegate;
+import janettha.activity1.EmocionesDto.IndicesActividadDto;
 import janettha.activity1.EmocionesDto.UsuarioDto;
 import janettha.activity1.Adaptadores.FragmentActivityRedacciones;
 import janettha.activity1.R;
@@ -42,8 +55,13 @@ import static janettha.activity1.EmocionesVo.LoginUsuarioVo.keySP;
 public class MenuActividadesVo extends AppCompatActivity {
     private static final String TAG = "MenuActividadesVo";
 
-    private Button btnA1, btnA2, btnA3;
-    private int a1, a2, a3;
+    private LinearLayout rootview, btnA1, btnA2, btnA3;
+    private int a1, a2;
+    private ProgressBar actUno, actDos;
+    private TextView progresoUno, progresoDos;
+    private ImageView imageView, imageView2;
+    private VideoView video;
+
     //private SoundManager soundManager;
 
     private MediaPlayerSounds mediaPlayerSounds;
@@ -52,9 +70,9 @@ public class MenuActividadesVo extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     String userU, sexo;
-    UsuarioDto usuarioDto;
     SQLiteDatabase db;
-    UsuariosDelegate delegateUsuario;
+    ActividadesDelegate actividadesDelegate;
+    IndicesActividadDto indicesActividadDto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +80,20 @@ public class MenuActividadesVo extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu_actividades);
         //usuarios = findViewById(R.id.usuarios);
+        rootview = findViewById(R.id.rootview);
         btnA1 = findViewById(R.id.menu_act1);
         btnA2 = findViewById(R.id.menu_act2);
         btnA3 = findViewById(R.id.menu_act3);
 
+        actUno = findViewById(R.id.bar_act1);
+        actDos = findViewById(R.id.bar_act2);
+        progresoUno = findViewById(R.id.txt_act1);
+        progresoDos = findViewById(R.id.txt_act2);
+        video = findViewById(R.id.videoViewPropiedad);
+        imageView = findViewById(R.id.imageView);
+        imageView2 = findViewById(R.id.imageView2);
 
-        delegateUsuario = new UsuariosDelegate();
+        actividadesDelegate = new ActividadesDelegate();
         //Toolbar myToolbar = findViewById(R.id.my_toolbar);
         //setSupportActionBar(myToolbar);
 
@@ -77,17 +103,23 @@ public class MenuActividadesVo extends AppCompatActivity {
         mDatabaseUser = FirebaseDatabase.getInstance().getReference("users");
 
         Log.d(TAG, "onCreate: s: "+sexo+" u: "+userU);
+        Toast.makeText(getBaseContext(), "Usuario: "+userU, Toast.LENGTH_SHORT).show();
 
         db = Factory.getBaseDatos(this);
-        usuarioDto = delegateUsuario.traeUsuario(db, userU);
+        //usuarioDto = delegateUsuario.traeUsuario(db, userU);
+        indicesActividadDto = actividadesDelegate.obtieneIndices(db, userU);
         db.close();
 
-        a1 = usuarioDto.getIndiceA1();
-        a2 = usuarioDto.getIndiceA2();
-        a3 = usuarioDto.getIndiceA3();
+        //se modifica la hora de último acceso del usuario seleccionado
+        FirebaseDatabase.getInstance().getReference().child("users").child(userU).child("finS").setValue(Factory.formatoFechaHora());
+
+        a1 = indicesActividadDto.getIndiceA();
+        a2 = indicesActividadDto.getIndiceB();
+        modificaProgresoFirebase(userU);
 
         inidiceActividad();
 
+        modificaTres();
 
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         mediaPlayerSounds = new MediaPlayerSounds(this);
@@ -116,7 +148,7 @@ public class MenuActividadesVo extends AppCompatActivity {
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
                 intent.putExtra("a1", a1);
                 intent.putExtra("sexo", sexo);
-                intent.putExtra("usuario", usuarioDto.getUser());
+                intent.putExtra("usuario", userU);
                 startActivity( intent );
             }
         });
@@ -139,8 +171,10 @@ public class MenuActividadesVo extends AppCompatActivity {
 
                     intent.putExtra("a2", a2);
                     intent.putExtra("sexo", sexo);
-                    intent.putExtra("usuario", usuarioDto.getUser());
+                    intent.putExtra("usuario", userU);
                     startActivity(intent);
+                }else{
+                    Snackbar.make(rootview, "Termina la Actividad Imágenes para continuar", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -158,11 +192,55 @@ public class MenuActividadesVo extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    intent.putExtra("a3", a3);
+                    intent.putExtra("a3", 0);
                     intent.putExtra("sexo", sexo);
-                    intent.putExtra("usuario", usuarioDto.getUser());
+                    intent.putExtra("usuario", userU);
                     startActivity(intent);
+                }else{
+                    Snackbar.make(rootview, "Termina la Actividad Redacciones para continuar", Snackbar.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    private void modificaProgresoFirebase(String user) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(user).child("indiceA1").setValue(a1);
+        FirebaseDatabase.getInstance().getReference().child("users").child(user).child("indiceA2").setValue(a2);
+        FirebaseDatabase.getInstance().getReference().child("users").child(user).child("indiceA3").setValue(0);
+    }
+
+    private void modificaTres() {
+        String uriPath, ruta, ruta2;
+        if(sexo.equals("m")){
+            uriPath = "android.resource://" + getBaseContext().getPackageName() + "/" + getBaseContext().getResources().getIdentifier("actividad_tres_m", "raw", getBaseContext().getPackageName());
+            ruta = "android.resource://janettha.activity1/drawable/actividad_imagenes_m";
+            ruta2 = "android.resource://janettha.activity1/drawable/actividad_redacciones_m";
+        }else {
+            uriPath = "android.resource://" + getBaseContext().getPackageName() + "/" + getBaseContext().getResources().getIdentifier("actividad_tres", "raw", getBaseContext().getPackageName());
+            ruta = "android.resource://janettha.activity1/drawable/actividad_imagenes";
+            ruta2 = "android.resource://janettha.activity1/drawable/actividad_redacciones";
+        }
+
+        //Imagen Menu imagenes
+        Picasso.with(getBaseContext())
+                .load(Uri.parse(ruta)).fit()
+                .into(imageView);
+
+        //Imagen Menu redacciones
+        Picasso.with(getBaseContext())
+                .load(Uri.parse(ruta2)).fit()
+                .into(imageView2);
+
+        //Imagen de video
+        video.setVideoURI(Uri.parse(uriPath));
+        video.start();
+        //TODO quitar opacidad en dialogo
+        video.setZOrderOnTop(true);
+        //TODO repetir video
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
             }
         });
     }
@@ -175,7 +253,9 @@ public class MenuActividadesVo extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(MenuActividadesVo.this, ListaUsuariosVo.class));
+        this.finish();
+        startActivity(new Intent(MenuActividadesVo.this, ListaUsuariosVo.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
     /*
         new AlertDialog.Builder(this)
@@ -235,8 +315,9 @@ public class MenuActividadesVo extends AppCompatActivity {
                     if (userT.getUser().equals(userU)) { // add newUser != null
                         a1 = userT.getIndiceA1();
                         a2 = userT.getIndiceA2();
-                        a3 = userT.getIndiceA3();
+                        int a3 = userT.getIndiceA3();
                         Log.e("Indices", a1 + "-" + a2 + "-" + a3);
+                        modificaProgreso();
                         break;
                     }
                 }
@@ -250,6 +331,26 @@ public class MenuActividadesVo extends AppCompatActivity {
             }
         };
         mDatabaseUser.addValueEventListener(mUserListener);
+    }
+
+    private void modificaProgreso() {
+        //Porcentaje de actividades
+        Log.d(TAG, "onCreate: "+a1+" - "+a2);
+        if(a1>=12) {
+            actUno.setProgress(100);
+            progresoUno.setText("100%");
+        }else {
+            actUno.setProgress((a1*100)/12);
+            progresoUno.setText(a1+"/"+12);
+        }
+
+        if(a2>=16) {
+            actDos.setProgress(100);
+            progresoDos.setText("100%");
+        }else {
+            actDos.setProgress((a2*100)/16);
+            progresoDos.setText(a2+"/"+16);
+        }
     }
 
     static boolean isAirplaneModeOn(Context context) {

@@ -7,7 +7,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
     android:background="@color/colorPrimaryBackg"
     >
 
@@ -129,6 +128,7 @@
             android:gravity="center"
             android:background="@color/colorPrimary"
             android:text="Agregar"
+            android:textColor="@color/white"
             android:layout_alignParentBottom="true"/>
     </LinearLayout>
 

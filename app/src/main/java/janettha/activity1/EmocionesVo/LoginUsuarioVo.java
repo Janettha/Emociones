@@ -55,7 +55,7 @@ public class LoginUsuarioVo extends AppCompatActivity {
     private DatabaseReference mReferenceTutor;
     private DatabaseReference mDatabaseUser;
     //private ValueEventListener mTutorListener;
-    private ValueEventListener mUserListener;
+    //private ValueEventListener mUserListener;
 
     public static final String keySP = "UserSex";
     private SharedPreferences sharedPreferences;
@@ -201,10 +201,11 @@ public class LoginUsuarioVo extends AppCompatActivity {
                     }
                 }).create().show();
     }
-
+    /*
     private void cargarUser(final String tutorName, final String userName){
         newUser = true;
         final String uName = userName;
+
         mUserListener = mDatabaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -225,26 +226,31 @@ public class LoginUsuarioVo extends AppCompatActivity {
 
                         Toast.makeText(LoginUsuarioVo.this, userT.getUser(), Toast.LENGTH_SHORT).show();
 
-                        //FirebaseUser tutor = mAuth.getCurrentUser();
-                        UsuarioDto user = new UsuarioDto();
-                        user.setUser(userT.getUser());
-                        user.setNombre(userT.getNombre());
-                        user.setApellidos(userT.getApellidos());
-                        user.setSexo(userT.getSexo());
-                        user.setCumple(userT.getCumple());
-                        user.setEdad(userT.getEdad());
-                        user.setTutor(tutorName);
-                        user.setFinS(userT.getFinS());
-                        user.setIndiceA1(userT.getIndiceA1());
-                        user.setIndiceA2(userT.getIndiceA2());
-                        user.setIndiceA3(userT.getIndiceA3());
-                        FirebaseDatabase.getInstance().getReference().child("users").child(user.getUser()).setValue(user);
-                        //Log.e(TAG, "onUserFound: Se ha agregado a un newUser: "+ newUser + " Edad: "+ userT.getEdad());
+                        if(userT.getTutor().equals(tutorName)) {
+                            //FirebaseUser tutor = mAuth.getCurrentUser();
+                            UsuarioDto user = new UsuarioDto();
+                            user.setUser(userT.getUser());
+                            user.setNombre(userT.getNombre());
+                            user.setApellidos(userT.getApellidos());
+                            user.setSexo(userT.getSexo());
+                            user.setCumple(userT.getCumple());
+                            user.setEdad(userT.getEdad());
+                            user.setTutor(tutorName);
+                            user.setFinS(userT.getFinS());
+                            user.setIndiceA1(userT.getIndiceA1());
+                            user.setIndiceA2(userT.getIndiceA2());
+                            user.setIndiceA3(userT.getIndiceA3());
 
-                        editorSP.putString("tutor", tutorName);
-                        editorSP.putString("tutorEmail", tutor.getEmail());
-                        editorSP.putString("usuario", userT.getUser());
-                        editorSP.apply();
+                            //FirebaseDatabase.getInstance().getReference().child("users").child(user.getUser()).setValue(user);
+                            //Log.e(TAG, "onUserFound: Se ha agregado a un newUser: "+ newUser + " Edad: "+ userT.getEdad());
+
+                            editorSP.putString("tutor", tutorName);
+                            editorSP.putString("tutorEmail", tutor.getEmail());
+                            editorSP.putString("usuario", userT.getUser());
+                            editorSP.apply();
+                        }else{
+                            Toast.makeText(LoginUsuarioVo.this, "Usted no tiene permisos para ver a este usuario", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     }
                 }
@@ -257,9 +263,8 @@ public class LoginUsuarioVo extends AppCompatActivity {
 
             }
         });
-
     }
-
+*/
     private void guardarDatos(){
         editorSP.putString("usuario", userU);
         editorSP.putString("password", passU);
@@ -376,7 +381,8 @@ public class LoginUsuarioVo extends AppCompatActivity {
     }
 
     /*Listeners*/
-    ValueEventListener mTutorListener = new ValueEventListener() {
+    /*
+    mTutorListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             //for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {}
@@ -415,6 +421,8 @@ public class LoginUsuarioVo extends AppCompatActivity {
                         editorSP.putString("tutorEmail", tutor.getEmail());
                         //editorSP.putString("usuario", user.getUser());
                         editorSP.apply();
+                    }else{
+                        Toast.makeText(LoginUsuarioVo.this, "Este usuario ya está registrado", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -427,5 +435,5 @@ public class LoginUsuarioVo extends AppCompatActivity {
 
         }
     };
-
+*/
 }

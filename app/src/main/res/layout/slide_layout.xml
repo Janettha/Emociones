@@ -4,29 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/titulo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:text="INSTRUCCIONES"
+        android:textColor="@color/BackgDialogs"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Instruccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Elige el nombre correcto de la emoción que se muestra en la siguiente imagen."
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/titulo"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        android:text="Elige el nombre correcto de la emoción que se muestra en la siguiente imagen."
         android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/activity_horizontal_margin"
-        android:textColor="@color/colorTxt"
-        android:background="@color/Act0Clear"
-        />
+        android:textColor="@color/BackgDialogs" />
+
     <ImageView
         android:id="@+id/imgFeel"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/Instruccion"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/section_label"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="@mipmap/ic_play"
-        />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="16dp"
+        android:background="@mipmap/ic_play" />
 
     <LinearLayout
         android:id="@+id/respuestas"
@@ -36,26 +51,25 @@
         android:layout_below="@+id/imgFeel"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/activity_margin"
         >
         <Button
             android:id="@+id/ans1"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 1"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:layout_margin="8dp"/>
         <Button
             android:id="@+id/ans2"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 2"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:layout_margin="8dp"/>
         <Button
             android:id="@+id/ans3"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 3"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:layout_margin="8dp"/>
 
     </LinearLayout>
 

@@ -56,4 +56,10 @@ public class ActividadRedaccionesDto extends ActividadMasterDto {
     public void setExpl3(String expl3) {
         this.explicacion.set(3, expl3);
     }
+
+    public String getString(){
+        return getListEmociones().get(0).getString()+"\n"
+              +getListEmociones().get(1).getString()+"\n"
+              +getListEmociones().get(2).getString();
+    }
 }

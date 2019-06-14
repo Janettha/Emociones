@@ -7,10 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.RelativeLayout;
-
 import java.util.List;
-
-import janettha.activity1.EmocionesDelegate.UsuariosDelegate;
 import janettha.activity1.EmocionesDto.UsuarioDto;
 import janettha.activity1.R;
 
@@ -22,19 +19,12 @@ public class UsuariosVo extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
     RelativeLayout rootview;
     Toolbar toolbar;
-
     FloatingActionButton button;
-
-
-    UsuariosDelegate delegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuarios_vo);
-
-        delegate = new UsuariosDelegate();
-        //usuarios = delegate.getUsuarios(10);
 
         rootview = findViewById(R.id.usuarios_rootview);
         recyclerView = findViewById(R.id.usuarios_recyclerview);

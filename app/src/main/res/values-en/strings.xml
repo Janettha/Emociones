@@ -1,0 +1,96 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">comoToy</string>
+    <string name="action_sign_in_short">Registrarse</string>
+    <string name="email">Correo</string>
+    <string name="usuario">Usuario</string>
+    <string name="nombre">Nombre (s)</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="minimum_password">Contraseña demasiada corta, ingresa al menos 6 caracteres.</string>
+    <string name="auth_failed">Autentificación fallida, revisa tu correo y contraseña.</string>
+    <string name="change_email">Cambiar correo</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="send_password_reset_email">Mandar email para cambiar contraseña.</string>
+    <string name="remove_user">Eliminar usuario</string>
+    <string name="new_pass">Nuevo contraseña</string>
+    <string name="title_activity_profile">Firebase</string>
+    <string name="title_activity_login">Ingresar</string>
+    <string name="hint_email">Correo</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="btn_login">Ingresar</string>
+    <string name="prompt_password">Ingrese su contraseña</string>
+    <string name="btn_link_to_register">¿No se ha registrado aún? Regístrese ahora.</string>
+    <string name="btn_link_to_login">¿Ya está registrado? ¡Ingrese!</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="btn_forgot_password">¿Olvidó su contraseña?</string>
+    <string name="btn_reset_password">Cambiar contraseña</string>
+    <string name="btn_back"><![CDATA[<< REGRESAR]]></string>
+    <string name="hint_new_email">Nuevo correo</string>
+    <string name="btn_change">Cambiar</string>
+    <string name="btn_send">Mandar</string>
+    <string name="btn_remove">Eliminar</string>
+    <string name="btn_sign_out">Salir (desloguearse)</string>
+    <string name="lbl_forgot_password">¿Olvidó su contraseña?</string>
+    <string name="forgot_password_msg">Confirmar correo para mandar intrucciones para cambiar contraseña.</string>
+    <string name="email_id">Correo</string>
+    <string name="title_activity_ex1__scrolling">Ex1_ScrollingActivity</string>
+    <string name="action_settings">Configuración</string>
+    <string name="title_activity_ex1">Ex1Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_preactivity">Preactivity</string>
+    <string name="title_activity_1">Activity1</string>
+    <string name="title_activity_2">Activity2</string>
+    <string name="title_activity_loginUser">2nd Login User</string>
+
+    <!--// MESES-->
+    <string name="enero">Enero</string>
+    <string name="febrero">Febrero</string>
+    <string name="marzo">Marzo</string>
+    <string name="abril">Abril</string>
+    <string name="mayo">Mayo</string>
+    <string name="junio">Junio</string>
+    <string name="julio">Julio</string>
+    <string name="agosto">Agosto</string>
+    <string name="septiembre">Septiembre</string>
+    <string name="octubre">Octubre</string>
+    <string name="noviembre">Noviembre</string>
+    <string name="diciembre">Diciembre</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Titles -->
+    <string name="title_crossfade">Simple Crossfade</string>
+    <string name="title_card_flip">Card Flip</string>
+    <string name="title_screen_slide">Screen Slide</string>
+    <string name="title_zoom">Zoom</string>
+    <string name="title_layout_changes">Layout Changes</string>
+    <string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
+        Ipsum</string>
+
+    <!-- Actions -->
+    <string name="action_toggle">Toggle indicator</string>
+    <string name="action_add_item">Add item</string>
+    <string name="action_remove_item">Remove item</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_finish">Finish</string>
+    <string name="action_info">Photo info</string>
+    <string name="action_photo">View photo</string>
+
+    <!-- Messages -->
+    <string name="message_empty_layout_changes">Add an item above to get started.</string>
+    <string name="message_zoom_touch_expand">Touch a photo to expand it.</string>
+
+    <!-- Accessibility-only descriptions -->
+    <string name="description_image_1">Image 1</string>
+    <string name="description_image_2">Image 2</string>
+    <string name="description_zoom_touch_close">Expanded image (touch to close)</string>
+
+    <!-- Other strings -->
+    <string name="card_back_title">Angry Red Android</string>
+    <string name="card_back_description"><![CDATA[Lorem ipsum dolor sit]]></string>
+    <string name="lorem_ipsum"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et magna ut erat elementum cursus in quis ipsum. Nam faucibus ultrices eros, vel tempor leo semper sit amet. Duis magna quam, congue vitae interdum nec, condimentum ut lectus. Sed commodo venenatis eros a dignissim. Nunc adipiscing turpis nec magna venenatis at ultricies ipsum bibendum. Sed volutpat urna quis nisi vulputate egestas. Etiam eu dui a enim lacinia dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nPhasellus orci mi, eleifend nec congue id, volutpat at neque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer semper velit vel leo rutrum sed fermentum elit porta.]]></string>
+    <string name="title_activity_act">ActA</string>
+
+</resources>

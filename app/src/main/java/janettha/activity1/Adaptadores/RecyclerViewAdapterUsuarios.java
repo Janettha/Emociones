@@ -36,7 +36,6 @@ public class RecyclerViewAdapterUsuarios extends RecyclerView.Adapter<RecyclerVi
     private ListaUsuariosVo listaUsuariosVo;
     private Context context ;
     private List<UsuarioDto> usuariosList;
-    private UsuariosDelegate usuariosDelegate;
 
     public static final String keySP = "UserSex";
     private SharedPreferences sharedPreferences;
@@ -48,7 +47,6 @@ public class RecyclerViewAdapterUsuarios extends RecyclerView.Adapter<RecyclerVi
         context = c;
         usuariosList = list;
         Log.d(TAG, "RecyclerViewAdapterUsuarios: lista: "+usuariosList.size());
-        usuariosDelegate = new UsuariosDelegate();
         sharedPreferences = context.getSharedPreferences(keySP, MODE_PRIVATE);
         editorSP = sharedPreferences.edit();
     }
@@ -70,7 +68,7 @@ public class RecyclerViewAdapterUsuarios extends RecyclerView.Adapter<RecyclerVi
             img = R.drawable.f0;
         } else {
             img = R.drawable.m0;
-            holder.rootview.setBackgroundColor(R.color.Act0Clear);
+            //holder.rootview.setBackgroundColor(R.color.Act0Clear);
         }
         Log.d(TAG, "onBindViewHolder: Usuario: "+dto.getString());
         holder.imagen.setImageDrawable(context.getResources().getDrawable(img));

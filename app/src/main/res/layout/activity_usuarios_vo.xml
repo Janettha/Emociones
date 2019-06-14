@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
-        android:tint="@color/colorPrimaryDark"
+        android:tint="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/Act0"

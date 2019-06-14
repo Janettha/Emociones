@@ -5,20 +5,53 @@
     android:id="@+id/Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
 
-    <TextView
-        android:id="@+id/section_label"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Elige el nombre correcto de la emoción que se muestra en la siguiente imagen."
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/backMenu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="INSTRUCCIONES"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/Instruccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:gravity="center"
+        android:text="¿Qué emoción se muestra en la imagen?"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:textStyle="bold"
         android:textSize="@dimen/activity_horizontal_margin"
-        android:textColor="@color/colorTxt"
-        android:background="@color/Act0Clear"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
         />
     <ImageView
         android:id="@+id/imgFeel"
@@ -26,9 +59,8 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/section_label"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="@mipmap/ic_play"
+        android:layout_below="@+id/Instruccion"
+        android:layout_margin="16dp"
         />
     <LinearLayout
         android:id="@+id/respuestas"
@@ -43,21 +75,25 @@
         <Button
             android:id="@+id/ans1"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 1"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:textColor="@color/white"
+            android:layout_margin="8dp"/>
         <Button
             android:id="@+id/ans2"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 2"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:textColor="@color/white"
+            android:layout_margin="8dp"
+            />
         <Button
             android:id="@+id/ans3"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Answer 3"
-            android:layout_margin="@dimen/activity_vertical_margin"/>
+            android:textColor="@color/white"
+            android:layout_margin="8dp"/>
 
     </LinearLayout>
 

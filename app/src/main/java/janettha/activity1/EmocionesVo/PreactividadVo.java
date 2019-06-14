@@ -145,13 +145,13 @@ public class PreactividadVo extends AppCompatActivity {
         }
         if (mDots.length > 0){
             if(position == 0) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r1, sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r1, sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r1, sexo, db).getColorB()));
             }else if(position == 1){
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r2, sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r2, sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r2, sexo, db).getColorB()));
             }else if(position == 2) {
-                mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r3, sexo, db).getColor()));
+                //mDotLayout.setBackgroundColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r3, sexo, db).getColor()));
                 mDots[position].setTextColor(android.graphics.Color.parseColor(emocionesDelegate.obtieneEmocion(r3, sexo, db).getColorB()));
             }
         }

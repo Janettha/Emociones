@@ -40,7 +40,7 @@ public class UsuarioDao {
     private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("users");
 
     public UsuarioDao(){    }
-
+/*
     public void existeUsuarioFirebase(ListaUsuariosVo a, UsuarioDto usuario, ValueEventListener listenerExiste) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         //CollectionReference usuarios = reference.collection
@@ -59,21 +59,34 @@ public class UsuarioDao {
             }
         }
     }
+    */
+
+    public void existeUsuarioFirebase(String usuario, ValueEventListener listenerExiste) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        //CollectionReference usuarios = reference.collection
+
+        Query query = reference.child("users").orderByChild("user").equalTo(usuario);
+        if (query.equals(UsuarioDto.class)){
+            query.addListenerForSingleValueEvent(listenerExiste);
+        }
+    }
 
     public boolean insertaUsuario(SQLiteDatabase db, UsuarioDto usuario){
         boolean ok = true;
         ContentValues raw = new ContentValues();
-            raw.put("usuario", usuario.getUser());
-            raw.put("password",usuario.getPassword());
-            raw.put("nombre", usuario.getNombre());
-            raw.put("apellidos", usuario.getApellidos());
-            raw.put("sexo", usuario.getSexo());
-            raw.put("cumple", usuario.getCumple());
-            raw.put("edad", usuario.getEdad());
-            raw.put("tutor", usuario.getTutor());
+        raw.put("usuario", usuario.getUser());
+        raw.put("password",usuario.getPassword());
+        raw.put("nombre", usuario.getNombre());
+        raw.put("apellidos", usuario.getApellidos());
+        raw.put("sexo", usuario.getSexo());
+        raw.put("cumple", usuario.getCumple());
+        raw.put("edad", usuario.getEdad());
+        raw.put("tutor", usuario.getTutor());
         ok = db.insert("usuario", null, raw) > 0 && ok;
-        if(!ok)
-            ok = db.update("usuario", raw, "usuario = "+usuario.getUser(), null) > 0 && ok;
+        if(!ok) {
+            ok = db.update("usuario", raw, "usuario = ?", new String[]{usuario.getUser()}) > 0 && ok;
+        }
+        Log.d(TAG, "insertaUsuario: Usuario: "+usuario.getString());
         return ok;
     }
 
@@ -94,6 +107,7 @@ public class UsuarioDao {
         }catch (SQLException e){
             Log.d(TAG, "obtieneUsuario: ERROR: "+e.getMessage());
         }
+        Log.d(TAG, "obtieneUsuario: usuario: "+idUsuario+user.getString());
         return  user;
     }
 

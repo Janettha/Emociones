@@ -66,6 +66,11 @@
         >
     </View>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,7 +118,7 @@
         <Button
             android:id="@+id/regresar_login"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="28dp"
             android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -125,13 +130,14 @@
         <Button
             android:id="@+id/log_login"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="28dp"
             android:layout_weight="1"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:gravity="center"
             android:background="@color/colorPrimary"
             android:text="Agregar"
+            android:textColor="@color/white"
             android:layout_alignParentBottom="true"/>
     </LinearLayout>
 

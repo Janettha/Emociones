@@ -35,12 +35,20 @@ public class EmocionesDelegate {
         return dao.getEmociones(sexo, db);
     }
 
-    public boolean insertaRespuestasUsuario(SQLiteDatabase db, UsuarioDto respuestas){
-        return daoActividades.insertaRespuestasUsuario(db, respuestas);
+    public boolean insertaRespuestasUsuario(SQLiteDatabase db, UsuarioDto usuario){
+        return daoActividades.insertaRespuestasUsuario(db, usuario);
     }
 
-    public boolean modificaRespuestasUsuario(SQLiteDatabase db, UsuarioDto respuestas){
-        return daoActividades.modificaRespuestaUsuario(db, respuestas);
+    public boolean modificaRespuestasActividadUno(SQLiteDatabase db, UsuarioDto usuarioDto){
+        return daoActividades.modificaRespuestaUsuario(db, usuarioDto);
+    }
+
+    public boolean modificaRespuestasActividadUno(SQLiteDatabase db, String usuario, int indice){
+        return daoActividades.modificaRespuestaActividadUno(db, usuario, indice);
+    }
+
+    public boolean modificaRespuestasActividadDos(SQLiteDatabase db, String usuario, int indice){
+        return daoActividades.modificaRespuestaActividadDos(db, usuario, indice);
     }
 
     public UsuarioDto obtieneRespuestasUsuario(SQLiteDatabase db, UsuarioDto respuestas){

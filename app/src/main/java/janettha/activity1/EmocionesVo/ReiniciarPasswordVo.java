@@ -1,5 +1,6 @@
 package janettha.activity1.EmocionesVo;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class ReiniciarPasswordVo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                Intent intent = new Intent(getApplicationContext(), ListaUsuariosVo.class);
+                startActivity(intent);
             }
         });
 
@@ -67,5 +70,11 @@ public class ReiniciarPasswordVo extends AppCompatActivity {
                         });
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(ReiniciarPasswordVo.this, ListaUsuariosVo.class));
     }
 }

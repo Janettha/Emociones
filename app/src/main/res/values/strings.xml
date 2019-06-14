@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Activity1</string>
+    <string name="app_name">cómoToy</string>
     <string name="action_sign_in_short">Registrarse</string>
     <string name="email">Correo</string>
     <string name="usuario">Usuario</string>

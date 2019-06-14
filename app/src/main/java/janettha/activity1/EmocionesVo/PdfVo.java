@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,21 +23,23 @@ import java.io.File;
 import java.util.Calendar;
 
 import janettha.activity1.R;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class PdfVo extends AppCompatActivity {
     private static final String TAG = "PdfVo";
 
+    KonfettiView konfettiView;
     PDFView pdfView;
     File file;
     Button correo, menu;
-
 
     public final String keySP = "UserSex";
     private SharedPreferences sharedPreferences;
     private String user, sexo;
 
     private FirebaseAuth mAuth;
-
 
     public static final int REQUEST_STORAGE_PERMISSION = 150;
 
@@ -47,7 +51,26 @@ public class PdfVo extends AppCompatActivity {
         pdfView = (PDFView)findViewById(R.id.pdfView);
         correo = (Button) findViewById(R.id.correo);
         menu = (Button) findViewById(R.id.backMenu);
+        konfettiView = findViewById(R.id.konfettiView);
 
+        konfettiView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Log.d(TAG, "onClick: holo");
+                konfettiView.build()
+                        .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                        .setDirection(0.0, 359.0)
+                        .setSpeed(1f, 5f)
+                        .setFadeOutEnabled(true)
+                        .setTimeToLive(2000L)
+                        .addShapes(Shape.RECT, Shape.CIRCLE)
+                        .addSizes(new Size(12, 5f))
+                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                        .streamFor(300, 5000L);
+            }
+        });
+
+        cargaConfetti();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -88,6 +111,16 @@ public class PdfVo extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        cargaConfetti();
+    }
+
+    private void cargaConfetti() {
+        konfettiView.callOnClick();
+    }
+
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -118,7 +151,12 @@ public class PdfVo extends AppCompatActivity {
     }
 
     private void sendEmail(String user){
-        Uri uri = Uri.fromFile(file);
+        Uri uri;
+        if (Build.VERSION.SDK_INT < 24) {
+            uri = Uri.fromFile(file);
+        } else {
+            uri = Uri.parse(file.getPath()); // My work-around for new SDKs, causes ActivityNotFoundException in API 10.
+        }
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, mAuth.getCurrentUser().getEmail());
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Reporte de actividades: "+user);

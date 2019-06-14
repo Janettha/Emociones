@@ -17,6 +17,7 @@ import java.util.List;
 import janettha.activity1.EmocionesDto.ActividadImagenesDto;
 import janettha.activity1.EmocionesDto.ActividadRedaccionesDto;
 import janettha.activity1.EmocionesDto.EmocionDto;
+import janettha.activity1.EmocionesDto.IndicesActividadDto;
 import janettha.activity1.EmocionesDto.UsuarioDto;
 import janettha.activity1.R;
 import janettha.activity1.Util.Factory;
@@ -115,6 +116,7 @@ public class ActividadesDao {
                     //listActB.add(i, a2);
                     ok = insertaActividadB(db, s, a2);
                     i++;
+                    Log.d(TAG, "actividadRedacciones: i: "+i);
                 }
             }else{
                 Log.e("FileE", "Archivo vacio");
@@ -204,7 +206,7 @@ public class ActividadesDao {
         boolean ok = true;
         ContentValues row = new ContentValues();
         try{
-            row.put("id_act_2", actividad.emocionMain().getEmocion());
+            row.put("id_act_2", actividad.getId());
             row.put("sexo", sexo);
             row.put("redaccion", actividad.getRedaccion());
             row.put("emocion1", actividad.emocionMain().getEmocion());
@@ -214,9 +216,14 @@ public class ActividadesDao {
             row.put("emocion3", actividad.emocionC().getEmocion());
             row.put("expl_c", actividad.getExpl3());
             ok = db.insert("actividad2", null, row)>0 && ok;
+            if(!ok){
+                ok = db.update("actividad2", row, "id_act_2 = ? AND sexo = ?", new String[]{actividad.getId()+"", sexo})>0 && ok;
+                Log.d(TAG, "insertaActividadB: uodate: "+ok);
+            }
         }catch (SQLException e) {
             Log.d(TAG, "insertaActividadB: ERROR: " + e.getMessage());
         }
+        Log.d(TAG, "insertaActividadB: "+actividad.getString());
         return ok;
     }
 
@@ -241,6 +248,43 @@ public class ActividadesDao {
         }catch(SQLException e){
             Log.d(TAG, "obtieneActividadesB: ERROR: "+e.getMessage());
         }
+        Log.d(TAG, "obtieneActividadesB: lista: "+lista.size());
         return lista;
+    }
+
+    public void obtieneTodasLasActividades(SQLiteDatabase db, String usuario){
+        String query = "SELECT * FROM actividades";
+
+    }
+
+    public boolean modificaRespuestaActividadUno(SQLiteDatabase db, String usuario, int indice) {
+        boolean ok = true;
+        ContentValues raw = new ContentValues();
+        raw.put("act_1", indice);
+        ok = db.update("actividades", raw, "usuario = ?", new String[]{usuario}) >0 && ok;
+        Log.d(TAG, "modificaRespuestaActividadUno: "+indice);
+        return ok;
+    }
+
+    public boolean modificaRespuestaActividadDos(SQLiteDatabase db, String usuario, int indice) {
+        boolean ok = true;
+        ContentValues raw = new ContentValues();
+        raw.put("act_2", indice);
+        ok = db.update("actividades", raw, "usuario = ?", new String[]{usuario}) >0 && ok;
+        Log.d(TAG, "modificaRespuestaActividadDos: "+indice);
+        return ok;
+    }
+
+    public IndicesActividadDto obtieneIndices(SQLiteDatabase db, String usuario) {
+        IndicesActividadDto dto = new IndicesActividadDto();
+        String query = "SELECT * FROM actividades WHERE usuario = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{usuario});
+        if(cursor.moveToNext()) {
+            dto.setIdActividad(cursor.getInt(cursor.getColumnIndex("id_actividad")));
+            dto.setUsuario(cursor.getString(cursor.getColumnIndex("usuario")));
+            dto.setIndiceA(cursor.getInt(cursor.getColumnIndex("act_1")));
+            dto.setIndiceB(cursor.getInt(cursor.getColumnIndex("act_2")));
+        }
+        return dto;
     }
 }

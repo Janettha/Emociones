@@ -14,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,22 +83,24 @@ public class RegistrarseVo extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                String nombre = inputName.getText().toString().trim();
-                String apellidos = inputSurnames.getText().toString().trim();
-                String usuario = inputUser.getText().toString().trim();
+                TutoresDto tutorDto = new TutoresDto();
+                tutorDto.setEmail(inputEmail.getText().toString().trim());
+                tutorDto.setPass(inputPassword.getText().toString().trim());
+                tutorDto.setName(inputName.getText().toString().trim());
+                tutorDto.setSurnames(inputSurnames.getText().toString().trim());
+                tutorDto.setTutor(inputUser.getText().toString().trim());
 
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(tutorDto.getEmail())) {
+                    inputEmail.setError("Este campo es requerido");
                     return;
-                }else if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(tutorDto.getPass())) {
+                    inputPassword.setError("Este campo es requerido");
                     return;
-                }else if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                }else if (tutorDto.getPass().length() < 6) {
+                    Toast.makeText(getApplicationContext(), R.string.minimum_password, Toast.LENGTH_SHORT).show();
                     return;
                 }else{
+                    /*
                     TutoresDto tutor = new TutoresDto();
                     tutor.setEmail(email);
                     tutor.setPass(password);
@@ -108,51 +112,62 @@ public class RegistrarseVo extends AppCompatActivity {
                     Log.d(TAG, "onClick: "+tutor.getString());
                     sesionDelegate.insertaTutor(tutor, db);
                     db.close();
+                    */
+                    crearUsuarioFirebase(tutorDto);
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
                 //create user
-                mFirebaseAuth.createUserWithEmailAndPassword(email, password)//Te recomiendo usar listener .addOnSuccessListener y .addOnFailureListener para asegurar ambos eventos
-                        .addOnCompleteListener(RegistrarseVo.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(RegistrarseVo.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {   //y evitar estos  ifs
-                                    Toast.makeText(RegistrarseVo.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                        updateProfile(inputName.getText().toString());
+            }
+        });
+    }
 
-                                        FirebaseUser tutorFA = mFirebaseAuth.getCurrentUser();
-                                        //,  )
-                                        TutoresDto tutor = new TutoresDto();
-                                        //new TutoresDto(
-                                        tutor.setTutor(inputUser.getText().toString());
-                                        tutor.setName(inputName.getText().toString());
-                                        tutor.setSurnames(inputSurnames.getText().toString());
-                                        tutor.setEmail(tutorFA.getEmail().toString());
-                                        tutor.setPass(inputPassword.getText().toString());
-                                        tutor.setRegistro(Factory.formatoFechaHora());
+    private void crearUsuarioFirebase(final TutoresDto tutoresDto) {
+        //Te recomiendo usar listener .addOnSuccessListener y .addOnFailureListener para asegurar ambos eventos
+        mFirebaseAuth.createUserWithEmailAndPassword(tutoresDto.getEmail(), tutoresDto.getPass())
+            .addOnCompleteListener(RegistrarseVo.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            })
+        .addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+ e.getMessage());
+                if(e.getMessage().equals("The email address is already in use by another account.")){
+                    Toast.makeText(RegistrarseVo.this, "Este correo ya está registrado, ingrese...", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(RegistrarseVo.this, "Algo salió mal, revise sus datos.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
+        .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
 
-                                        Toast.makeText(getApplication().getBaseContext(), inputName.getText().toString(), Toast.LENGTH_SHORT).show();
+                updateProfile(inputName.getText().toString());
 
-                                        //FirebaseDatabase.getInstance().getReference().child("tutores").child(inputUser.getText().toString()).setValue(user);
-                                        mDatabaseRef.child(inputUser.getText().toString()).setValue(tutor);
-                                        SQLiteDatabase db = Factory.getBaseDatos(getBaseContext());
-                                        sesionDelegate.insertaTutor(tutor, db);
-                                        db.close();
-                                        Intent intent = new Intent(RegistrarseVo.this, ListaUsuariosVo.class);
-                                        intent.putExtra("tutor", tutor.getTutor());
-                                        startActivity(intent);
+                FirebaseUser tutorFA = mFirebaseAuth.getCurrentUser();
+                tutoresDto.setRegistro(Factory.formatoFechaHora());
 
-                                        finish();
-                                }
-                            }
-                        });
+                Toast.makeText(getApplication().getBaseContext(), inputName.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                //FirebaseDatabase.getInstance().getReference().child("tutores").child(inputUser.getText().toString()).setValue(user);
+                mDatabaseRef.child(inputUser.getText().toString()).setValue(tutoresDto);
+                SQLiteDatabase db = Factory.getBaseDatos(getBaseContext());
+                if(sesionDelegate.insertaTutor(tutoresDto, db)){
+                    Toast.makeText(RegistrarseVo.this, "¡Bienvenido!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(RegistrarseVo.this, "Algo salió mal, revice su conexión", Toast.LENGTH_SHORT).show();
+                }
+                db.close();
+
+                Intent intent = new Intent(RegistrarseVo.this, ListaUsuariosVo.class);
+                intent.putExtra("tutor", tutoresDto.getTutor());
+                startActivity(intent);
+
+                finish();
             }
         });
     }

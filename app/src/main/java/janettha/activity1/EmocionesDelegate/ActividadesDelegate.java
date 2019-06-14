@@ -8,6 +8,7 @@ import java.util.List;
 import janettha.activity1.EmocionesDao.ActividadesDao;
 import janettha.activity1.EmocionesDto.ActividadImagenesDto;
 import janettha.activity1.EmocionesDto.ActividadRedaccionesDto;
+import janettha.activity1.EmocionesDto.IndicesActividadDto;
 
 public class ActividadesDelegate {
     private static final String TAG = "ActividadesDelegate";
@@ -32,5 +33,9 @@ public class ActividadesDelegate {
 
     public List<ActividadRedaccionesDto> obtieneActividadesB(SQLiteDatabase db, String sexo){
         return dao.obtieneActividadesB(db, sexo);
+    }
+
+    public IndicesActividadDto obtieneIndices(SQLiteDatabase db, String userU) {
+        return dao.obtieneIndices(db, userU);
     }
 }

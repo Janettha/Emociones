@@ -24,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:textAlignment="center"
+        android:background="@color/white"
         ></LinearLayout>
 
 </RelativeLayout>

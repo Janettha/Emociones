@@ -2,6 +2,7 @@ package janettha.activity1.Adaptadores;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
@@ -30,6 +31,7 @@ import janettha.activity1.EmocionesDto.ActividadImagenesDto;
 import janettha.activity1.EmocionesDto.EmocionDto;
 import janettha.activity1.EmocionesDao.EmocionesDao;
 import janettha.activity1.EmocionesDto.RespuestaDto;
+import janettha.activity1.EmocionesVo.MenuActividadesVo;
 import janettha.activity1.Util.Factory;
 import janettha.activity1.Util.SQLite;
 import janettha.activity1.Util.TemplatePDF;
@@ -97,7 +99,7 @@ public class SliderAdapterImagenes extends PagerAdapter {
         //emocionesDao.Emociones(context, idSexo);
         respuestaDtoPDF = new RespuestaDto();
         user = userU;
-        Toast.makeText(context, "User: "+user, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Usuario: "+user, Toast.LENGTH_SHORT).show();
 /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             soundManager = new SoundManager(context);
@@ -122,13 +124,14 @@ public class SliderAdapterImagenes extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull final ViewGroup container, int position) {
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View rootView = layoutInflater.inflate(R.layout.fragment_preactivity, container, false);
 
+        ImageView backMenu = rootView.findViewById(R.id.backMenu);
         int r[] = new int[4];
         currentVP = position;
-        fInicio = Calendar.getInstance().getTime().toString();
+        fInicio = Factory.formatoFechaHora();
 
 
         r[1] = listActA.get(position).emocionMain().getEmocion();
@@ -144,15 +147,15 @@ public class SliderAdapterImagenes extends PagerAdapter {
         SQLiteDatabase db = Factory.getBaseDatos(context);
         r[0] = (int) (Math.random() * 3);
         if (r[0] == 0) {
-            rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
+            //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
             //interfaceFrame(rootView, imgFeel, btnA1, btnA2, btnA3, idSexo, rMain, rMain, rB, rC);
             interfaceFrame(rootView, r[1], r[1], r[2], r[3]);
         } else if (r[0] == 1) {
-            rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
+            //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
             //interfaceFrame(rootView, imgFeel, btnA1, btnA2, btnA3, idSexo, rMain, rC, rMain, rB);
             interfaceFrame(rootView, r[1], r[3], r[1], r[2]);
         } else if (r[0] == 2) {
-            rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
+            //rootView.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r[1], sexo, db).getColor()));
             //interfaceFrame(rootView, imgFeel, btnA1, btnA2, btnA3, idSexo, rMain, rB, rC, rMain);
             interfaceFrame(rootView, r[1], r[2], r[3], r[1]);
         }
@@ -160,6 +163,16 @@ public class SliderAdapterImagenes extends PagerAdapter {
 
         db.close();
         container.addView(rootView);
+
+
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MenuActividadesVo.class);
+                context.startActivity(intent);
+            }
+        });
+
         return rootView;
     }
 
@@ -173,18 +186,19 @@ public class SliderAdapterImagenes extends PagerAdapter {
         Uri ruta;
         final int ex[] = new int[3];
 
-        indicaciones = v.findViewById(R.id.section_label);
+        indicaciones = v.findViewById(R.id.Instruccion);
         txFeel = v.findViewById(R.id.imgFeel);
 
         txtFeel1 = v.findViewById(R.id.ans1);
         txtFeel2 = v.findViewById(R.id.ans2);
         txtFeel3 = v.findViewById(R.id.ans3);
-
+/*
         if(sexo.equals("f")){
-            indicaciones.setText("Lee o escucha la pequeña situación y elije ¿cómo se siente Lili?");
+            indicaciones.setText("¿Cómo se siente Lili?");
         }else{
-            indicaciones.setText("Lee o escucha la pequeña situación y elije ¿cómo se siente Juan Carlos?");
+            indicaciones.setText("¿Cómo se siente Juan Carlos?");
         }
+        */
 
         //expl = getArguments().getString(Activity1.ARG_r);
         ex[0] = r1;
@@ -208,7 +222,7 @@ public class SliderAdapterImagenes extends PagerAdapter {
                 .into(txFeel); //fit para la imagen en la vista
 
         /*Nombre y color de botones*/
-        v.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColor()));
+        //v.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColor()));
         txtFeel1.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
         txtFeel2.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
         txtFeel3.setBackgroundColor(Color.parseColor(emocionesDelegate.obtieneEmocion(r, sexo, db).getColorB()));
@@ -283,7 +297,7 @@ public class SliderAdapterImagenes extends PagerAdapter {
         btnBack = (Button) dialog.findViewById(R.id.btnBack);
 
         currentVP = vp.getPosition();
-        fFin = Calendar.getInstance().getTime().toString();
+        fFin = Factory.formatoFechaHora();
 
         db = Factory.getBaseDatos(context);
             respuestaDtoPDF = new RespuestaDto(emocionesDelegate.obtieneEmocion(listActA.get(currentVP).emocionMain().getEmocion(), sexo, db).getEmocion(), fInicio, fFin, em.getEmocion(), resp);
@@ -328,6 +342,7 @@ public class SliderAdapterImagenes extends PagerAdapter {
                         //Log.e("DB/A1", "UserDB: "+mDatabaseUser.child(user).child("indiceA1").toString());
                         if(A1<12) {
                             int indice=listActA.get(0).emocionMain().getEmocion()+3;
+                            modificaIndices(indice);
                             mDatabaseUser.child(user).child("indiceA1").setValue(indice);
                             Log.e("DB/A1", "User: " + user + " indiceA1: " + String.valueOf(indice));
                         }else{
@@ -350,10 +365,16 @@ public class SliderAdapterImagenes extends PagerAdapter {
         dialog.show();
     }
 
+    private void modificaIndices(int indice) {
+        SQLiteDatabase db = Factory.getBaseDatos(context);
+        emocionesDelegate.modificaRespuestasActividadUno(db, user, indice);
+        db.close();
+    }
+
     private void pdfConfig(){
         templatePDF.openPDF();
         templatePDF.addMetaData(user);
-        templatePDF.addHeader(user, fInicio, fFin, Calendar.getInstance().getTime().toString());
+        templatePDF.addHeader(user, fInicio, fFin, Factory.fechaFormat(context, Factory.formatoFechaHora()));
         templatePDF.addParrafo(1);
         templatePDF.createTable(respuestaDtos);
         templatePDF.closeDocument();

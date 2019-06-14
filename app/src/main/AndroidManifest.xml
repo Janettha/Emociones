@@ -16,21 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".EmocionesVo.MainActivity">
+        <activity
+            android:name=".EmocionesVo.MainActivity"
+            android:parentActivityName=".EmocionesVo.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EmocionesVo.MainActivity" />
         </activity>
-        <activity android:name=".EmocionesVo.LoginVo" />
-        <activity android:name=".EmocionesVo.ReiniciarPasswordVo" />
-        <activity android:name=".EmocionesVo.RegistrarseVo" />
+        <activity
+            android:name=".EmocionesVo.LoginVo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EmocionesVo.ReiniciarPasswordVo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EmocionesVo.RegistrarseVo"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EmocionesVo.MenuActividadesVo"
             android:label="Menu"
-            android:parentActivityName=".EmocionesVo.MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:parentActivityName=".EmocionesVo.ListaUsuariosVo"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EmocionesVo.PreactividadVo"
             android:label="@string/title_activity_preactivity"
@@ -66,16 +79,24 @@
         <activity
             android:name=".EmocionesVo.LoginUsuarioVo"
             android:label="@string/title_activity_loginUser"
+            android:parentActivityName=".EmocionesVo.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Util.DBPrueba" />
         <activity
             android:name=".EmocionesVo.ImagenesVo"
-            android:label="@string/title_activity_act" />
-        <activity android:name=".EmocionesVo.PdfVo" />
-        <activity android:name=".EmocionesVo.ListaUsuariosVo" />
+            android:label="@string/title_activity_act"
+            android:parentActivityName=".EmocionesVo.MenuActividadesVo" />
+        <activity
+            android:name=".EmocionesVo.PdfVo"
+            android:parentActivityName=".EmocionesVo.MenuActividadesVo" />
+        <activity
+            android:name=".EmocionesVo.ListaUsuariosVo"
+            android:theme="@style/AppTheme" />
         <activity android:name=".EmocionesVo.AgregaRedacciones" />
         <activity android:name=".EmocionesVo.UsuariosVo" />
-        <activity android:name=".EmocionesVo.ConfiguracionCuenta"></activity>
+        <activity android:name=".EmocionesVo.ConfiguracionCuenta" />
+        <activity android:name=".EmocionesVo.SplashScreen" />
+        <activity android:name=".Util.Felicidades"></activity>
     </application>
 
 </manifest>

@@ -42,6 +42,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.zip.ZipEntry;
@@ -60,6 +62,7 @@ public class Factory {
     public static final String FORMATO_FECHA = "%d-%m %H:%M";
     public static final String FORMATO_FECHA_ID = "%Y%m%d%H%M%S";
     public static final String FORMATO_FECHA_HORA = "%Y-%m-%d %H:%M:%S";
+    public static final String FORMATO_FECHA_HORA_DATE = "yyyy-MM-dd HH:mm:ss";
     public static final String FORMATO_NUMERO = "#,###,###.00";
     public static final String CERO = "0";
     /*
@@ -148,6 +151,20 @@ public class Factory {
         Time time = new Time();
         time.setToNow();
         return time.format(FORMATO_FECHA_HORA);
+    }
+
+    public static Date formatoFechaHoraToDate(String fechaHora) {
+        Log.d(TAG, "formatoFechaHoraToDate: "+fechaHora);
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMATO_FECHA_HORA_DATE);
+        try {
+            date = formatter.parse(fechaHora);
+            Log.d(TAG, "formatoFechaHoraToDate: date: "+date);
+            Log.d(TAG, "formatoFechaHoraToDate: fechaHora: "+formatter.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
     public static String formatoFecha(long milisegundos){
@@ -433,10 +450,10 @@ public class Factory {
         Log.d(TAG, "fechaFormat: "+fecha);
         String a = fecha.substring(0,4);
         String m = fecha.substring(5, 7);
-        String d = fecha.substring(8, fecha.length());
+        String d = fecha.substring(8, 10);
         Log.d(TAG, "fechaFormat: a: "+a+" m: "+m+" d: "+d);
         String diaFormat = (Integer.parseInt(d) < 10) ? CERO+d : d;
-        return mesNombre(context, Integer.parseInt(m))+" "+diaFormat+", "+a;
+        return mesNombre(context, Integer.parseInt(m))+" "+diaFormat+", "+a+" - "+horaFormat(fecha.substring(11, fecha.length()));
     }
 
     public static String mesNombre(Context context, int mes){

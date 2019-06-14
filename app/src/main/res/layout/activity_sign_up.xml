@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryBackg"
+    android:background="@color/white"
     tools:context="janettha.activity1.EmocionesVo.RegistrarseVo">
 
     <LinearLayout
@@ -13,6 +13,15 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regístrese"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            />
         <EditText
             android:id="@+id/nombre"
             android:layout_width="match_parent"
@@ -73,8 +82,8 @@
             android:id="@+id/sign_up_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
             android:text="@string/action_sign_in_short"
             android:textStyle="bold"
             android:background="@color/colorPrimaryDark"
@@ -84,11 +93,11 @@
             android:id="@+id/btn_reset_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_margin"
             android:background="@null"
             android:text="@string/btn_forgot_password"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/colorPrimaryDark"
+            />
 
         <!-- Link to Login Screen -->
 
@@ -96,11 +105,10 @@
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
             android:background="@null"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp" />
     </LinearLayout>
 

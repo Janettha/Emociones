@@ -11,8 +11,13 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +38,7 @@ import janettha.activity1.Util.Factory;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
+    LinearLayout linearLayoutDatos;
     private Button btnChangePassword, btnRemoveUser,
             changePassword, remove, signOut;
     private TextView email;
@@ -45,20 +51,183 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    Boolean salir;
+
+    FrameLayout fondo;
+    ImageView imageView;
+    boolean firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fondo = findViewById(R.id.RelativeLayoutFondo);
+        linearLayoutDatos = findViewById(R.id.datos_layout);
+
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
         email = (TextView) findViewById(R.id.useremail);
 
         sp = getSharedPreferences("firstTime", MODE_PRIVATE);
         editor = sp.edit();
+        salir = false;
 
-        boolean firstTime = sp.getBoolean("firstTime", true);
+        firstTime = sp.getBoolean("firstTime", true);
 
+        linearLayoutDatos.setVisibility(View.GONE);
+        fondo.setVisibility(View.VISIBLE);
+
+        if(getIntent().getExtras() != null){
+            salir = getIntent().getExtras().getBoolean("salir");
+        }
+
+        if(salir) {
+            Log.d(TAG, "onCreate: not null " + getIntent().getExtras());
+            Animation animacion = AnimationUtils.loadAnimation(this, R.anim.animacion_portada);
+            if(fondo != null) {
+                Log.d(TAG, "onCreate: salir: " + true);
+                salir = true;
+                getIntent().getExtras().clear();
+                fondo.startAnimation(animacion);
+            }
+
+            animacion.setAnimationListener(new AnimationHandler());
+            /*if (getIntent().getExtras().getBoolean("salir")) {
+                Log.d(TAG, "onCreate: salir: " + true);
+                onfinish();
+            }
+            */
+        }else{
+            Log.d(TAG, "onCreate: Primera vez");
+            Animation animacion = AnimationUtils.loadAnimation(this, R.anim.animacion_portada);
+            if(fondo != null) {
+                fondo.startAnimation(animacion);
+            }
+
+            animacion.setAnimationListener(new AnimationHandler());
+            /*
+            Intent intent = new Intent(this, SplashScreen.class);
+            startActivity(intent);
+            this.finish();
+            */
+        }
+
+/*
+
+        */
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setDataToView(FirebaseUser user) {
+        if(user != null)
+            email.setText(user.getEmail());
+        else
+            email.setText("Bienvenido");
+    }
+
+    // this listener will be called when there is change in firebase user session
+    FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null) {
+                // user auth state is changed - user is null
+                // launch login activity
+                startActivity(new Intent(MainActivity.this, LoginVo.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                finish();
+            } else {
+                setDataToView(user);
+            }
+        }
+    };
+
+    //sign out method
+    public void signOut() {
+        auth.signOut();
+        // this listener will be called when there is change in firebase user session
+        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (user == null) {
+            // user auth state is changed - user is null
+            // launch login activity
+                startActivity(new Intent(MainActivity.this, LoginVo.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                finish();
+            }
+            }
+        };
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener);
+        }
+        MainActivity.this.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    public void onfinish(){
+        Log.d(TAG, "onfinish: ");
+        finish();
+    }
+
+    class AnimationHandler implements Animation.AnimationListener {
+
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            if (salir) {
+                Log.d(TAG, "onCreate: salir: endanimation" + true);
+                onfinish();
+            }/*else{
+                Log.d(TAG, "onAnimationEnd: inicia");
+                //Intent intento = new Intent(MainActivity.this, ListaUsuariosVo.class);
+                //MainActivity.this.startActivity(intento);
+                inicia();
+            }
+            */
+            Log.d(TAG, "onAnimationEnd: salir: "+salir);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animation animation) {        }
+
+        @Override
+        public void onAnimationStart(Animation animation) {
+            if (!salir) {
+                Log.d(TAG, "onAnimationEnd: inicia");
+                //Intent intento = new Intent(MainActivity.this, ListaUsuariosVo.class);
+                //MainActivity.this.startActivity(intento);
+                inicia();
+            }
+            Log.d(TAG, "onAnimationStart: salir: "+salir);
+        }
+    }
+
+    private void inicia() {
         delegate = new SesionDelegate(this);
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -86,23 +255,29 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: "+sp.getBoolean("firstTime", true));
         }
 
-        authListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // user auth state is changed - user is null
+            // launch login activity
+            Log.d(TAG, "onAuthStateChanged: manda a registrarse");
+            startActivity(new Intent(MainActivity.this, RegistrarseVo.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            //startActivity(new Intent(MainActivity.this, LoginVo.class));
+            finish();
+        }else{
+            Log.d(TAG, "onAuthStateChanged: manda a Lista de Usuarios");
+            startActivity(new Intent(MainActivity.this, ListaUsuariosVo.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            finish();
+            //startActivity(new Intent(MainActivity.this, LoginUsuarioVo.class));
+        }
+        /*authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(MainActivity.this, RegistrarseVo.class));
-                    //startActivity(new Intent(MainActivity.this, LoginVo.class));
-                    finish();
-                }else{
-                    startActivity(new Intent(MainActivity.this, LoginVo.class));
-                    //startActivity(new Intent(MainActivity.this, LoginUsuarioVo.class));
-                }
-            }
-        };
 
+            }
+        };*/
+/*
         btnChangePassword = (Button) findViewById(R.id.change_password_button);
         btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
         changePassword = (Button) findViewById(R.id.changePass);
@@ -200,69 +375,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         db.close();
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void setDataToView(FirebaseUser user) {
-        if(user != null)
-            email.setText(user.getEmail());
-        else
-            email.setText("Bienvenido");
-    }
-
-    // this listener will be called when there is change in firebase user session
-    FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-        @SuppressLint("SetTextI18n")
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user == null) {
-                // user auth state is changed - user is null
-                // launch login activity
-                startActivity(new Intent(MainActivity.this, LoginVo.class));
-                finish();
-            } else {
-                setDataToView(user);
-
-            }
-        }
-    };
-
-    //sign out method
-    public void signOut() {
-        auth.signOut();
-        // this listener will be called when there is change in firebase user session
-        FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user == null) {
-            // user auth state is changed - user is null
-            // launch login activity
-                startActivity(new Intent(MainActivity.this, LoginVo.class));
-                finish();
-            }
-            }
-        };
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (authListener != null) {
-            auth.removeAuthStateListener(authListener);
-        }
+    */
     }
 }

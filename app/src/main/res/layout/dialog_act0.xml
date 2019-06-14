@@ -30,6 +30,9 @@
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:text="Regresar"
+        android:textColor="@color/white"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
         android:layout_margin="@dimen/activity_margin"
         android:background="#ffd53b"
         />
